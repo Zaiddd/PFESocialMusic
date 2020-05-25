@@ -52,7 +52,6 @@ class CommentPublicationController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($newComment);
             $entityManager->flush();
-            $this->addFlash('success', 'Commentaire ajouté !');
             return $this->redirectToRoute('User.accueil', [
                 'publication' => $publication
             ]);

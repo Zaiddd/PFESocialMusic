@@ -24,13 +24,14 @@
 
             {% if publi.partage == 1 and user.id == publi.user.id %}
                 <div style="width: 75%; margin: 0 auto">
-                    <h6 style="background-color: lightblue"> {{ app.user.pseudo }} a partagé</h6>
+                    <h6 style="background-color: lightblue"> {{ publi.user.pseudo }} a partagé</h6>
                 </div>
             {% endif %}
 
             {#{% if app.user.id == publi.user.id %}#}
-                <div class="p-3 shadow p-3 mb-5 bg-white" style="width: 75%; margin: 0 auto; height: fit-content;" >
-                    <h5 style="display: inline">{{ publi.user.pseudo }}</h5>
+                <div class="p-3 shadow p-3 mb-5 bg-white" style="width: 75%; margin: 0 auto; height: fit-content; border-radius: 10px" >
+                    <h5 style="display: inline"><a style="color: black" href="users/{% if publi.partage ==1 %}{{ publi.idUserOriginal }}{% else %}{{ publi.user.id }}{% endif %}">{% if publi.partage ==1 %}{{ publi.userOriginal }}{% else %}{{ publi.user.pseudo }}{% endif %}</a></h5> -
+                    <a href="">Suivre</a>
 
                     <a style="margin-left: 3%; float: right" href="{{ publi.id }}/signaler">Signaler</a>
                     {% if app.user == publi.user %}
@@ -56,6 +57,7 @@
                     <a style="margin-left: 3%" href="/users/{{ publi.id }}/commenter">Commenter</a>
                     <a style="float:right;" href="{{ publi.id }}/partager" id="partager"><img style="max-width: 80px; max-height: 45px" src="{{ asset('img/share.png') }}" alt=""></a>
                     <hr>
+                    {% if publi.partage == 0 %}
                     <b><label>Commentaires</label></b><br><br>
                     <div style="margin-left: 6%">
 
@@ -71,6 +73,7 @@
                             </div>
                         {% endfor %}
                     </div>
+                    {% endif %}
                 </div>
         {#{% endif %}#}
         {% endfor %}

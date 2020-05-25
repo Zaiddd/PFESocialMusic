@@ -28,12 +28,12 @@
 
             {% if publi.partage == 1 and user.id == publi.user.id %}
             <div style="width: 75%; margin: 0 auto">
-                <h6 style="background-color: lightblue"> {{ app.user.pseudo }} a partagé</h6>
+                <h6 style="background-color: lightblue"> {{ publi.user.pseudo }} a partagé</h6>
             </div>
             {% endif %}
 
             <div class="p-3 shadow p-3 mb-5 bg-white" style="width: 75%; margin: 0 auto; height: fit-content; border-radius: 10px" >
-                <h5 style="display: inline"><a style="color: black" href="{{ publi.user.id }}/profil">{{ publi.user.pseudo }}</a></h5> -
+                <h5 style="display: inline"><a style="color: black" href="users/{% if publi.partage ==1 %}{{ publi.idUserOriginal }}{% else %}{{ publi.user.id }}{% endif %}">{% if publi.partage ==1 %}{{ publi.userOriginal }}{% else %}{{ publi.user.pseudo }}{% endif %}</a></h5> -
                 <a href="">Suivre</a>
 
                 <a style="margin-left: 3%; float: right" href="{{ publi.id }}/signaler">Signaler</a>
@@ -62,7 +62,7 @@
                 <a href="{{ publi.id }}/disliker" id="dislike" style="margin-left: 3%"><img style="max-width: 80px; max-height: 45px" src="{{ asset('img/dislike.png') }}" alt=""></a>
                 <label class="lDislike">{{ publi.nbDislike }}</label>
 
-
+                {% if publi.partage == 0 %}
                 <a style="margin-left: 3%" href="{{ publi.id }}/commenter">Commenter</a>
                 <a style="float:right;" href="{{ publi.id }}/partager" id="partager"><img style="max-width: 80px; max-height: 45px" src="{{ asset('img/share.png') }}" alt=""></a>
 
@@ -82,75 +82,38 @@
                         </div>
                     {% endfor %}
                 </div>
+                {% endif %}
             </div>
             {% endif %}
-            <script>
-
-                listePublications.push({{ publi.id }});
-                console.log(listePublications);
-            </script>
-
-            <script>
-                var cliqueLike = 0;
-                var cliqueDislike = 0;
-
-                var nbLike = 0;
-                var nbDislike = 0;
-
-                //Like
-                function like(){
-                    if(cliqueLike == 0) {
-                        nbLike++;
-                        document.getElementById('lTest').innerHTML = nbLike;
-                        document.getElementById({{ publi.id }}).style.backgroundColor = 'lightblue';
-                        cliqueLike++;
-                    }
-                    else{
-                        nbLike--;
-                        document.getElementById('lTest').innerHTML = nbLike;
-                        document.getElementById({{ publi.id }}).style.backgroundColor = 'white';
-                        cliqueLike--;
-                    }
-                }
-
-                //Dislike
-                function dislike(){
-                    if(cliqueDislike == 0) {
-                        nbDislike++;
-                        document.getElementsByTagName('lDislike').innerHTML = nbDislike;
-                        document.getElementById({{ publi.id }}).style.backgroundColor = 'red';
-                        cliqueDislike++;
-                    }
-                    else{
-                        nbDislike--;
-                        document.getElementsByTagName('lDislike').innerHTML = nbDislike;
-                        document.getElementById({{ publi.id }}).style.backgroundColor = 'white';
-                        cliqueDislike--;
-                    }
-                }
-
-                window.onscroll = function() {scrollFunction()};
-
-                function scrollFunction() {
-                    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                        document.getElementById("menu").style.top = "0";
-                        document.getElementById("sidebar").style.top = "68px";
-                        document.getElementById("sidebar2").style.top = "68px";
-                    } else {
-                        document.getElementById("menu").style.top = "86px";
-                        document.getElementById("sidebar").style.top = "86px";
-                        document.getElementById("sidebar2").style.top = "86px";
-                    }
-                }
-            </script>
         {% endfor %}
 
+
+
+
+
+
         {% else %}
-
         {% include 'admin/indexAdmin.html.twig' %}
-
         {% endif %}
     </div>
+
+
+
+    <script>
+        window.onscroll = function() {scrollFunction()};
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                document.getElementById("menu").style.top = "0";
+                document.getElementById("sidebar").style.top = "68px";
+                document.getElementById("sidebar2").style.top = "68px";
+            } else {
+                document.getElementById("menu").style.top = "86px";
+                document.getElementById("sidebar").style.top = "86px";
+                document.getElementById("sidebar2").style.top = "86px";
+            }
+        }
+    </script>
 
 
 {% endblock %}

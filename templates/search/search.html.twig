@@ -18,6 +18,7 @@
     <section id="content">
 
         {% for user in users %}
+            {% if user.pseudo != "admin" and app.user.pseudo != user.pseudo%}
             <article>
                 <div class="card border-light mb-3" id="articlesRecents" style="max-width: 25rem;margin:1.5em">
                     <div class="card-header">
@@ -31,6 +32,7 @@
                     </div>
                 </div>
             </article>
+            {% endif %}
         {% endfor %}
 
     </section>

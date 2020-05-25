@@ -154,12 +154,43 @@ class PublicationController extends AbstractController
 
         $publication = new Publication();
         $publication->setDate(new \DateTime());
-        $publication->setUser($idPubli->getUser());
+        $publication->setUser($this->getUser());
         $publication->setChampPhoto($idPubli->getChampPhoto());
         $publication->setCommentaire($idPubli->getCommentaire());
         $publication->setUserQuiCommente($idPubli->getUserQuiCommente());
         $publication->setReponses($idPubli->getReponses());
         $publication->setPartage(1);
+        $publication->setNbLike(0);
+        $publication->setNbDislike(0);
+        $publication->setUserOriginal($idPubli->getUser()->getPseudo());
+        $publication->setIdUserOriginal($idPubli->getUser()->getId());
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($publication);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('User.accueil');
+    }
+
+    /**
+     * @Route("users/{id}/partager", name="Publi.partagerFromSearch")
+     */
+    public function partagerPubliFromSearch(ManagerRegistry $doctrine, Request $request, $id)
+    {
+        $idPubli = $doctrine->getRepository(Publication::class)->findOneBy(["id" => [$id]]);
+
+        $publication = new Publication();
+        $publication->setDate(new \DateTime());
+        $publication->setUser($this->getUser());
+        $publication->setChampPhoto($idPubli->getChampPhoto());
+        $publication->setCommentaire($idPubli->getCommentaire());
+        $publication->setUserQuiCommente($idPubli->getUserQuiCommente());
+        $publication->setReponses($idPubli->getReponses());
+        $publication->setPartage(1);
+        $publication->setNbLike(0);
+        $publication->setNbDislike(0);
+        $publication->setUserOriginal($idPubli->getUser()->getPseudo());
+        $publication->setIdUserOriginal($idPubli->getUser()->getId());
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($publication);

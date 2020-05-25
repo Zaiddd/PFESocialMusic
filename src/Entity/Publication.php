@@ -71,6 +71,16 @@ class Publication implements \Serializable
      */
     private $signals;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $userOriginal;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $idUserOriginal;
+
     public function __construct()
     {
         $this->signals = new ArrayCollection();
@@ -260,6 +270,30 @@ class Publication implements \Serializable
                 $signal->setPublication(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUserOriginal(): ?string
+    {
+        return $this->userOriginal;
+    }
+
+    public function setUserOriginal(string $userOriginal): self
+    {
+        $this->userOriginal = $userOriginal;
+
+        return $this;
+    }
+
+    public function getIdUserOriginal(): ?int
+    {
+        return $this->idUserOriginal;
+    }
+
+    public function setIdUserOriginal(?int $idUserOriginal): self
+    {
+        $this->idUserOriginal = $idUserOriginal;
 
         return $this;
     }
