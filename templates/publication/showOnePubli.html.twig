@@ -1,0 +1,38 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <br>
+<div class="p-3 shadow p-3 mb-5 bg-white" style="width: 75%; margin: 0 auto; height: fit-content; border-radius: 10px" >
+    <h5 style="display: inline"><a style="color: black" href="users/{{ user.id }}">{{ user.pseudo }}</a></h5>
+
+        <h4 style="float:right; ">
+            <a href="{{ publication.id }}/deletePubli" onclick="return confirm('Êtes-vous sûrs de vouloir supprimer cette publication ?')" style="text-decoration: none; color: red">X</a>
+        </h4>
+    <hr>
+
+    <span style="margin-left: 5%; max-width: 750px;"></span>{{ publication.commentaire }}<br><br>
+    <div style="text-align: center">
+        <img style="max-width: 750px; max-height: 700px" alt="" src="../../../../../uploads/{{ publication.getChampPhoto()}}">
+    </div>
+
+    <br>
+
+    <hr>
+    <b><label>Commentaires</label></b><br><br>
+    <div style="margin-left: 6%">
+
+        {% set u = "" %}
+        {% for user in publication.userQuiCommente %}
+            {% set u = user %}
+        {% endfor %}
+
+        {% for rep in publication.reponses %}
+            <div>
+                <b><a style="text-decoration: none" href="/users/{{ u.id }}">{{ u }}</a></b><br>
+                <span style="margin-left: 2%"></span>{{ rep }}<br><br>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,52 @@
+security:
+    encoders:
+        FOS\UserBundle\Model\UserInterface: bcrypt
+        App\Entity\User:
+            algorithm: bcrypt
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        in_memory: { memory: null }
+        fos_userbundle:
+            id: fos_user.user_provider.username
+        users:
+            entity:
+                class: App\Entity\User
+                property: login
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            anonymous: true
+            provider: users
+            form_login:
+                csrf_token_generator: security.csrf.token_manager
+                login_path: app_login
+                check_path: app_login
+                default_target_path: home
+            logout:
+                path: deconnexion
+                target: /
+            guard:
+                provider: fos_userbundle
+                authenticators:
+                    - App\Security\UserAuthentificatorAuthenticator
+                    - App\Security\FacebookAuthenticator
+                    - App\Security\GoogleAuthenticator
+                entry_point: App\Security\UserAuthentificatorAthenticator
+
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: ROLE_ADMIN
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+         - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/profile,      roles: ROLE_USER }

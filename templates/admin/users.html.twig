@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+
+{% block body %}
+    <div class="container" style="width: 200%; height: 900px; text-align: center"><br><br>
+    <div class="p-3 shadow p-3 mb-5 bg-white" style="width: 53%; margin: 0 auto; height: fit-content; border-radius: 10px">
+    <h1>Liste des utilisateurs</h1><br>
+    <table border="1px" width="550px">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Email</th>
+            <th>Pseudo</th>
+            <th>Nb publications</th>
+            <th>Opération</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            {% if user.pseudo != "admin" %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.pseudo }}</td>
+                <td>{{ user.publications|length }}</td>
+                {% if user.estBanni == 0 %}
+                <td><button type="button" class="btn btn-primary"><a style="text-decoration: none; color: white" href="listeUsers/{{ user.id }}/editUser">Modifier</a></button>
+                    <button type="button" class="btn btn-danger"><a style="text-decoration: none; color: white" href="listeUsers/{{ user.id }}/bannir" onclick="return confirm('Êtes-vous sûrs de vouloir bannir cet utilisateur ?')">Bannir</a></button>
+                </td>
+                {% else %}
+                    <td>
+                        <b>Banni</b>
+                        <button type="button" class="btn btn-danger"><a style="text-decoration: none; color: white" href="listeUsers/{{ user.id }}/debannir" onclick="return confirm('Êtes-vous sûrs de vouloir débannir cet utilisateur ?')">Débannir</a></button>
+                    </td>
+                {% endif %}
+            </tr>
+            {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+        <br>
+        <button type="button" class="btn btn-primary"><a style="text-decoration: none; color: white" href="/userAccueil">Retour au tableau de bord</a></button>
+    </div>
+
+    </div>
+{% endblock %}

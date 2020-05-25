@@ -1,0 +1,17 @@
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+<div class="col p-0 pl-3" >
+    <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            bsCustomFileInput.init()
+        })
+    </script>
+    <h4> Quoi de neuf ? </h4><br>
+    {{ form_start(form) }}
+    {{ form_row(form._token) }}
+    {{ form_row(form.commentaire, {'label': 'Exprimez-vous '}) }}
+    {{ form_row(form.champPhoto, {'label': 'Choisir une photo ? ' | default }) }}
+    {{ form_errors(form) }}
+    <input type="hidden" value="{{ id.id }}" name="user.id" id="user.id" class="form-control">
+    <button class="btn btn-primary" type="submit"> {{ button_label | default('Confirmer') }} </button>
+</div>

@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Choisir le moyen d'inscription{% endblock %}
+
+{% block body %}
+    <form method="post" class="w-50 p-3 shadow p-3 mb-5 bg-white" style="margin-left: 25%; margin-top: 5%; border-radius: 10px">
+        <div class="row-fluid" style="text-align: center">
+        <h2>Choisissez le moyen d'inscription souhaité</h2><br><br>
+            <button type="button" class="btn btn-warning"><a style="text-decoration: none; color:black;" href="{{ path('connect_google_start') }}" tabindex="-1" >S'inscrire avec Google</a></button>
+            <button type="button" class="btn btn-success"><a style="text-decoration: none; color:black;" href="{{ path('User.ajouter') }}" >S'inscrire avec une adresse mail</a></button>
+            <button type="button" class="btn btn-info"><a style="text-decoration: none; color: white" href="{{ path('connect_facebook_start') }}">S'inscrire avec Facebook</a></button>
+            <br><br>
+        </div>
+    </form>
+{% endblock %}

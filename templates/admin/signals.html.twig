@@ -1,0 +1,41 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+<div class="container" style="width: 200%; height: 900px; text-align: center"><br><br>
+    <div class="p-3 shadow p-3 mb-5 bg-white" style="width: 50%; margin: 0 auto; height: fit-content; border-radius: 10px">
+    <h1>Liste des signalements</h1><br>
+        <table border="1px" width="500px">
+            <thead>
+            <tr>
+                <th colspan="2">Auteur du signalement</th>
+                <th colspan="2">Auteur de la publication</th>
+                <th colspan="2">Date</th>
+                <th colspan="2">Opération</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for signal in signals %}
+                <tr>
+                    <td colspan="2">{{signal.publication.user.pseudo}}</td>
+                    <td colspan="2">{{ signal.nomUser }}</td>
+                    <td colspan="2">{#{ rep.date|date("d/m/Y") }#}</td>
+                    <td colspan="2" width="30%">
+                        <button type="button" class="btn btn-primary">
+                            <a style="text-decoration: none; color: white" href="publicationSignalee/{{ signal.publication.id }}">Voir</a>
+                        </button>
+                        <button type="button" class="btn btn-warning">
+                        <a style="text-decoration: none; color: white" href="deleteSignal/{{ signal.id }}">Terminer</a>
+                        </button>
+                    </td>
+                </tr>
+            {% endfor %}
+
+        </table>
+        <br><br>
+        <button type="button" class="btn btn-primary"><a style="text-decoration: none; color: white" href="/userAccueil">Retour au tableau de bord</a></button>
+    </div>
+
+</div>
+
+{% endblock %}

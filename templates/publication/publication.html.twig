@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+{% block title %} Nouvelle publication {% endblock %}
+
+{% block body %}
+
+    <div class=" w-50 row mx-5 my-3 shadow-lg p-3 bg-white rounded" >
+        <h3 class="w-100" style="text-align: center"> Nouvelle publication </h3>
+        {{ include('form/newPublication.html.twig', {'button_label': 'Publier'}) }}
+    </div>
+{% endblock %}

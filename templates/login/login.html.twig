@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Identification{% endblock %}
+
+{% block body %}
+    <form method="post" class="w-50 p-3 shadow p-3 mb-5 bg-white" style="margin-left: 25%; margin-top: 5%; border-radius: 10px">
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    {% if app.user %}
+        <div class="mb-3">
+            Vous êtes déja connecté en tant que {{ app.user.username }}, <a href="{{ path('deconnexion') }}">Déconnexion</a>
+        </div>
+    {% else %}
+
+        <h1 class="h3 mb-3 font-weight-normal">Identification</h1>
+        <div class="form-group">
+            <label for="inputLogin" >Adresse mail</label>
+            <input type="text" value="{{ last_username }}" name="mail" id="inputLogin" class="form-control" placeholder="Entrez votre adresse mail" required autofocus>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword">Mot de passe</label>
+            <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Entrez votre mot de passe" required>
+        </div>
+        <input type="hidden" name="_csrf_token"
+               value="{{ csrf_token('authenticate') }}"
+        >
+
+        {#
+            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+            See https://symfony.com/doc/current/security/remember_me.html
+
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" name="_remember_me"> Remember me
+                </label>
+            </div>
+        #}
+
+        <button class="btn  btn-success" type="submit">
+            S'identifier
+        </button>
+        <a href="user/menuInscription" class="btn btn-secondary">Inscription</a>
+        <a class="btn btn-link" href="{{ path('User.demandeResetPassword') }}" > mot de passe oublié</a>
+        <button style="margin-left: 11%" type="button" class="btn btn-warning"><a style="text-decoration: none; color:black;" href="{{ path('connect_google_start') }}" tabindex="-1" >Se connecter avec Google</a></button>
+        <button type="button" class="btn btn-info"><a style="text-decoration: none; color: white" href="{{ path('connect_facebook_start') }}">Se connecter avec Facebook</a></button>
+        </form>
+
+    {% endif %}
+{% endblock %}

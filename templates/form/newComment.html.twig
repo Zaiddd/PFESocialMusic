@@ -1,0 +1,21 @@
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+<div class="container" style="width: 200%; height: 500px;">
+    <hr>
+    <br><br>
+        <h5>{{ idPubli.user.pseudo }}</h5>
+        {{ idPubli.commentaire }}
+        {#{idPubli.champPhoto}#}
+        <br><br><br><br>
+
+
+        {{ form_start(form) }}
+        {{ form_row(form._token) }}
+        {{ form_row(form.newComment, {'label': 'Votre commentaire '}) }}
+        {{ form_errors(form) }}
+
+
+
+    <button class="btn btn-primary"> {{ button_label | default('Confirmer') }} </button>
+</div>
+<input type="hidden" name="token" value="{{ csrf_token('user') }}"/>

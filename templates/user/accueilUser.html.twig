@@ -1,0 +1,156 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+    {% if app.user.pseudo != "admin" %}
+
+    <form method="post" id="menu" class="w-100 p-3 shadow p-3 mb-5 bg-white" style="position:fixed;">
+        <div class="row-fluid" style="text-align: center; ">
+            <a href="{{ path('User.accueil') }}" style=" text-decoration: none; font-size: 22px;">Rafraîchir</a>
+            <h3 style="display: inline"> - Fil d'actualité - </h3>
+            <a href="{{ path('User.publier') }}" style="text-decoration: none;font-size: 22px;"> Publier</a>
+        </div>
+    </form>
+
+    <div class="vertical-nav bg-white" id="sidebar" style=" min-width: 17rem;width: 20rem;height: 100vh;position: fixed;top: 86px;left: 0;box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);">
+    </div>
+
+    <div class="vertical-nav bg-white" id="sidebar2" style="min-width: 17rem;width: 20rem;height: 100vh;position: fixed;top: 86px;right: 0;box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.4);">
+    </div>
+
+
+    <div class="container" style="margin-top: 7%">
+
+
+        {% for publi in publication %}
+
+            {% if app.user.id == publi.user.id %}
+
+            {% if publi.partage == 1 and user.id == publi.user.id %}
+            <div style="width: 75%; margin: 0 auto">
+                <h6 style="background-color: lightblue"> {{ app.user.pseudo }} a partagé</h6>
+            </div>
+            {% endif %}
+
+            <div class="p-3 shadow p-3 mb-5 bg-white" style="width: 75%; margin: 0 auto; height: fit-content; border-radius: 10px" >
+                <h5 style="display: inline"><a style="color: black" href="{{ publi.user.id }}/profil">{{ publi.user.pseudo }}</a></h5> -
+                <a href="">Suivre</a>
+
+                <a style="margin-left: 3%; float: right" href="{{ publi.id }}/signaler">Signaler</a>
+                {% if app.user == publi.user %}
+                <h4 style="float:right; ">
+                    <a href="{{ publi.id }}/deletePubli" onclick="return confirm('Êtes-vous sûrs de vouloir supprimer cette publication ?')" style="text-decoration: none; color: red">X</a>
+                </h4>
+                {% endif %}
+                <hr>
+
+                <span style="margin-left: 5%; max-width: 750px;"></span>{{ publi.commentaire }}<br><br>
+                <div style="text-align: center">
+                    <img style="max-width: 750px; max-height: 700px" alt="" src="../../../../../uploads/{{ publi.getChampPhoto()}}">
+                </div>
+
+                <br>
+                {#<div style="text-align: center">
+                    <iframe src="https://open.spotify.com/embed/track/4wdJ33LQeaYBdXLKYVHxrE?si=HimiPAPSQV6E5xsVOBLTCw" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                </div>#}
+
+                <hr>
+
+                <a href="{{ publi.id }}/liker" id="like"><img style="max-width: 75px; max-height: 40px" src="{{ asset('img/likeTest.jpg') }}" alt=""></a>
+                <label class="lLike" >{{publi.nbLike}}</label>
+
+                <a href="{{ publi.id }}/disliker" id="dislike" style="margin-left: 3%"><img style="max-width: 80px; max-height: 45px" src="{{ asset('img/dislike.png') }}" alt=""></a>
+                <label class="lDislike">{{ publi.nbDislike }}</label>
+
+
+                <a style="margin-left: 3%" href="{{ publi.id }}/commenter">Commenter</a>
+                <a style="float:right;" href="{{ publi.id }}/partager" id="partager"><img style="max-width: 80px; max-height: 45px" src="{{ asset('img/share.png') }}" alt=""></a>
+
+                <hr>
+                <b><label>Commentaires</label></b><br><br>
+                <div style="margin-left: 6%">
+
+                    {% set u = "" %}
+                    {% for user in publi.userQuiCommente %}
+                        {% set u = user %}
+                    {% endfor %}
+
+                    {% for rep in publi.reponses %}
+                        <div>
+                            <b><a style="text-decoration: none" href="/users/{{ u.id }}">{{ u }}</a></b><br>
+                            <span style="margin-left: 2%"></span>{{ rep }}<br><br>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            <script>
+
+                listePublications.push({{ publi.id }});
+                console.log(listePublications);
+            </script>
+
+            <script>
+                var cliqueLike = 0;
+                var cliqueDislike = 0;
+
+                var nbLike = 0;
+                var nbDislike = 0;
+
+                //Like
+                function like(){
+                    if(cliqueLike == 0) {
+                        nbLike++;
+                        document.getElementById('lTest').innerHTML = nbLike;
+                        document.getElementById({{ publi.id }}).style.backgroundColor = 'lightblue';
+                        cliqueLike++;
+                    }
+                    else{
+                        nbLike--;
+                        document.getElementById('lTest').innerHTML = nbLike;
+                        document.getElementById({{ publi.id }}).style.backgroundColor = 'white';
+                        cliqueLike--;
+                    }
+                }
+
+                //Dislike
+                function dislike(){
+                    if(cliqueDislike == 0) {
+                        nbDislike++;
+                        document.getElementsByTagName('lDislike').innerHTML = nbDislike;
+                        document.getElementById({{ publi.id }}).style.backgroundColor = 'red';
+                        cliqueDislike++;
+                    }
+                    else{
+                        nbDislike--;
+                        document.getElementsByTagName('lDislike').innerHTML = nbDislike;
+                        document.getElementById({{ publi.id }}).style.backgroundColor = 'white';
+                        cliqueDislike--;
+                    }
+                }
+
+                window.onscroll = function() {scrollFunction()};
+
+                function scrollFunction() {
+                    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                        document.getElementById("menu").style.top = "0";
+                        document.getElementById("sidebar").style.top = "68px";
+                        document.getElementById("sidebar2").style.top = "68px";
+                    } else {
+                        document.getElementById("menu").style.top = "86px";
+                        document.getElementById("sidebar").style.top = "86px";
+                        document.getElementById("sidebar2").style.top = "86px";
+                    }
+                }
+            </script>
+        {% endfor %}
+
+        {% else %}
+
+        {% include 'admin/indexAdmin.html.twig' %}
+
+        {% endif %}
+    </div>
+
+
+{% endblock %}

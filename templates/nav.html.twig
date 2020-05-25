@@ -1,0 +1,85 @@
+<nav class="navbar navbar-expand-lg" style="background-color: black;">
+    {% if not app.user %}
+        <a class="navbar-brand" href="{{ path('') }}">
+            <img src="{{ asset('img/MusiqueLogo.jpg') }}" class="d-inline-block align-top" alt="" width="80" height="60">
+        </a>
+    {% else %}
+        <a class="navbar-brand" href="{{ path('User.accueil') }}">
+            <img src="{{ asset('img/MusiqueLogo.jpg') }}" class="d-inline-block align-top" alt="" width="80" height="60">
+        </a>
+    {% endif %}
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                {% if not app.user %}
+                    <a class="nav-link" href="{{ path('') }}" style="color: white">Accueil</a>
+                {% else %}
+                    <a class="nav-link" href="{{ path('User.accueil') }}" style="color: white">Accueil</a>
+                {% endif %}
+            </li>
+            <li class="nav-item dropdown active" >
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" style="color: white">Mon compte</a>
+                <div class="dropdown-menu">
+
+
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a class="dropdown-item" href="{{ path('') }}"> Accéder à mon espace </a>
+                    {% elseif is_granted('ROLE_USER') %}
+                        {% if app.user.pseudo == "admin" %}
+                            <a class="dropdown-item disabled" href="{{ app.user.id }}/profil"> Mon profil </a>
+                        {% else %}
+                            <a class="dropdown-item" href="{{ app.user.id }}/profil"> Mon profil </a>
+                        {% endif %}
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ path('User.InfosPerso.show') }}"> Informations personnelles </a>
+                    {% else %}
+                        <a style="color: black" class="dropdown-item {% if app.user %}disabled{% endif %}" href="{{ path('app_login') }}" >Se connecter</a>
+                        <a style="color: black" class="dropdown-item {% if app.user %}disabled{% endif %}" href="{{ path('User.choixRegister') }}">Inscription</a>
+                    {% endif %}
+
+                </div>
+            </li>
+            <li>
+                {% if app.user %}
+                <a class="nav-link" href="{{ path('User.search') }}" style="color: white;">Rechercher</a>
+                {% else %}
+                {% endif %}
+            </li>
+        </ul>
+
+        <h2 style="text-align: center; color: #f39c12; width: 330%; outline-color: white; ">Social Music</h2>
+
+
+        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    {% if app.user %}
+                        <a class="nav-link" href="{{ path('deconnexion') }}">Déconnexion</a>
+                    {% endif %}
+                </li>
+                {% if not app.user %}
+                    <a style="color: white" class="nav-link active" href="{{ path('User.choixRegister') }}" tabindex="-1" >S'inscrire</a>
+                {% endif %}
+                <li class="nav-item">
+                    {% if not app.user %}
+                        <a style="color: white" class="nav-link active" href="{{ path('app_login') }}" tabindex="-1" >Se connecter</a>
+                    {% else %}
+                        {#<a class="nav-link active text-success" href="{{ path('') }}" tabindex="-1" >{{ app.user.username}}</a>#}
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</nav>
+{% for type, flashMessages in app.session.flashbag.all() %}
+    {% for flashMessage in flashMessages %}
+        <p class="alert alert-{{ type }}">
+            {{ flashMessage|trans }}
+        </p>
+    {% endfor %}
+{% endfor %}

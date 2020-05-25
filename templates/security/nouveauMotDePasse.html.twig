@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau mot de passe {% endblock %}
+
+{% block body %}
+    <form method="post" class="w-50 p-3 shadow p-3 mb-5 bg-white" style="margin-left: 25%; margin-top: 5%;">
+        {% if erreur is defined%}
+            <p class="alert alert-danger">{{ erreur }}</p>
+        {% endif %}
+        {% if retour is defined%}
+            <p class="alert alert-success">{{ retour }}</p>
+        {% else %}
+            <h1 class="h3 mb-3 font-weight-normal">Nouveau mot de passe pour {{ mail }}</h1>
+            <div class="form-group">
+                <label for="inputLogin" >Nouveau mot de passe</label>
+                <input type="password"  name="mdp1" id="inputLogin" class="form-control" required autofocus>
+            </div>
+            <div class="form-group">
+                <label for="inputLogin" >Repetez le nouveau mot de passe</label>
+                <input type="password"  name="mdp2" id="inputLogin" class="form-control" required autofocus>
+            </div>
+
+            <input type="submit" value="Envoyer une demande" class="btn btn-success">
+        {% endif %}
+    </form>
+{% endblock %}

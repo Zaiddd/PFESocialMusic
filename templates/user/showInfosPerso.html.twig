@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+{% block title %} Informations familiales - Odyssée du cirque {% endblock %}
+
+{% block body %}
+
+    <div class="row my-3 mx-5 shadow-lg bg-white" style="border-radius: 10px">
+        <div class="m-3 w-100">
+            <h3> Mes informations personnelles </h3><br>
+            <form class="mr-3 d-inline" action="{{ path("User.InfosPerso.edit") }}">
+                <button type="submit" class="btn btn-success"> Modifier mes informations personnelles </button>
+            </form>
+            <form class="mr-3 d-inline" action="{{ path("User.InfosPerso.editGouts") }}">
+                <button type="submit" class="btn btn-success"> Modifier mes goûts musicaux </button>
+            </form>
+            <form class="mr-3 d-inline" method="post" action="{{ path("User.demandeResetPassword") }}">
+                <input type="hidden" name="mail" value="{{ user.mail }}">
+                <input type="submit" class="btn btn-secondary" value="Demande de changement de mot de passe">
+            </form>
+        </div>
+        <table class="table">
+            <tbody>
+            <tr>
+                <th> Nom </th>
+                <td>{{ user.nom }}</td>
+            </tr>
+            <tr>
+                <th> Prénom </th>
+                <td>{{ user.prenom }}</td>
+            </tr>
+            <tr>
+                <th> Adresse mail </th>
+                <td>{{ user.mail }}</td>
+            </tr>
+            <tr>
+                <th> Pseudo </th>
+                <td>{{ user.pseudo }}</td>
+            </tr>
+            <tr>
+                <th> Artiste(s) préféré(s) </th>
+                <td>{{ user.artistePref }}</td>
+            </tr>
+            <tr>
+                <th> Goûts musical </th>
+                <td>{{ user.genreMusique }}</td>
+            </tr>
+            <tr>
+                <th> Date de naissance </th>
+                <td>{{ user.dateNaissance | date('d-m-Y') }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

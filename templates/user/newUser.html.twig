@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% block title %} Inscription - SocialMusic {% endblock %}
+
+{% block body %}
+    <div class="mx-5 my-3">
+        <h2> Inscription </h2>
+        <form action="{{ path("") }}">
+            <button type="submit" class="btn btn-secondary"> Retourner à l'accueil du site </button>
+        </form>
+    </div>
+    <div class="row mx-5 my-3 shadow-lg p-3 bg-white rounded">
+        <h3 class="w-100"> Créer un compte </h3><br><br>
+        {{ include('form/inscription.html.twig', {'button_label': 'S\'inscrire'}) }}
+    </div>
+{% endblock %}

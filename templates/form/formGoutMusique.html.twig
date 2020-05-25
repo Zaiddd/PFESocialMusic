@@ -1,0 +1,12 @@
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+<div class="col p-0 pr-3">
+    {{ form_start(form) }}
+    <h4> Mes goûts musicaux </h4>
+    {{ form_row(form.artistePref, {'label': 'Précisez votre/vos artiste(s) préféré(s) '}) }}
+
+    {{ form_row(form.genreMusique, {'label': 'Citez vos genres musicaux '}) }}
+    {{ form_row(form._token) }}
+    <button class="btn btn-primary"> {{ button_label | default('Confirmer') }} </button>
+</div>
+<input type="hidden" name="token" value="{{ csrf_token('user') }}"/>

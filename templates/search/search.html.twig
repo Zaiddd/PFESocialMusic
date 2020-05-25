@@ -1,0 +1,44 @@
+{% extends 'base.html.twig'%}
+
+{% block title %}Rechercher un article{% endblock %}
+
+{% block body %}
+
+    <form method="post" class="w-100 p-3 shadow p-3 mb-5 bg-white" style=" border-radius: 10px">
+    <h1>Chercher un utilisateur</h1>
+
+    <div class="form-group">
+    {% form_theme searchForm 'bootstrap_4_layout.html.twig' %}
+    {{ form_start(searchForm) }}
+    {{ form_row(searchForm.pseudo, {'label': " ", 'attr': {'placeholder': 'Mot clé...'}}) }}
+    <button class="btn btn-primary">rechercher</button>
+    {{ form_end(searchForm) }}
+
+
+    <section id="content">
+
+        {% for user in users %}
+            <article>
+                <div class="card border-light mb-3" id="articlesRecents" style="max-width: 25rem;margin:1.5em">
+                    <div class="card-header">
+
+                        <h3>{{ user.pseudo }}</h3>
+
+                    </div>
+                    <div class="card-body">
+
+                        <a href="/users/{{ user.id }}" class="btn btn-primary">Consulter le profil</a>
+                    </div>
+                </div>
+            </article>
+        {% endfor %}
+
+    </section>
+    </div>
+    </form>
+
+    <div class="pagination">
+        {{ knp_pagination_render(users) }}
+    </div>
+
+{% endblock %}

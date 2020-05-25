@@ -1,0 +1,25 @@
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+<div class="col p-0 pr-3">
+    {{ form_start(form) }}
+    <h4> Compte </h4>
+    {{ form_row(form.mail, {'label': 'Adresse mail* '}) }}
+    {{ form_row(form.mdp, {'label': 'Mot de passe* '}) }}
+    {{ form_row(form.confirmMdp, {'label': 'Confirmez votre mot de passe* '}) }}
+    <small id="pass" class="form-text text-muted"> Veuillez confirmer votre mot de passe </small>
+</div>
+<div class="col p-0 pl-3">
+    <h4> Informations personnelles </h4>
+    {{ form_row(form.nom, {'label': 'Nom* '}) }}
+    {{ form_row(form.prenom, {'label': 'Prénom* '}) }}
+    {{ form_row(form.pseudo, {'label': 'Choisissez un pseudo* '}) }}
+    {{ form_row(form.dateNaissance, {'label': 'Date de naissance* '}) }}
+    {% if is_granted('ROLE_ADMIN') %}
+        {{ form_row(form.estActive, {'label': 'Le compte a-t-il été activé ? '}) }}
+    {% endif %}
+    {{ form_row(form._token) }}
+    <button class="btn btn-primary"> {{ button_label | default('Confirmer') }} </button>
+    <button style="margin-left: 46%" type="button" class="btn btn-warning"><a style="text-decoration: none; color:black;" href="{{ path('connect_google_start') }}" tabindex="-1" >S'inscrire avec Google</a></button>
+    <button type="button" class="btn btn-info"><a style="text-decoration: none; color: white" href="{{ path('connect_facebook_start') }}">S'inscrire avec Facebook</a></button>
+</div>
+<input type="hidden" name="token" value="{{ csrf_token('user') }}"/>
