@@ -429,4 +429,53 @@ class UserController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/users/{id}/suivre", name="User.Suivre")
+     */
+    public function suivreUser(UserRepository $userRepository, EntityManagerInterface $doctrine, $id): Response
+    {
+        $user = $doctrine->getRepository(User::class)->findOneBy(['id' => [$id]]);
+        $publicationsUser = $doctrine->getRepository(Publication::class)->findBy(['user' => $user]);
+
+        foreach($publicationsUser as $publi){
+            $newPubli = new Publication();
+            $newPubli->setDate(new \DateTime());
+            $newPubli->setUser($this->getUser());
+            $newPubli->setChampPhoto($publi->getChampPhoto());
+            $newPubli->setCommentaire($publi->getCommentaire());
+            $newPubli->setUserQuiCommente($publi->getUserQuiCommente());
+            $newPubli->setReponses($publi->getReponses());
+            $newPubli->setPartage(1);
+            $newPubli->setNbLike(0);
+            $newPubli->setNbDislike(0);
+            $newPubli->setUserOriginal($publi->getUser()->getPseudo());
+            $newPubli->setIdUserOriginal($publi->getUser()->getId());
+            $newPubli->setPubliSuivie(1);
+            $newPubli->setUserAyantSuivi($this->getUser()->getId());
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($newPubli);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('User.accueil');
+    }
+
+    /**
+     * @Route("/users/{id}/desabonner", name="User.Desabonner")
+     */
+    public function desabonner(UserRepository $userRepository, EntityManagerInterface $doctrine, $id): Response
+    {
+        $user = $doctrine->getRepository(User::class)->findOneBy(['id' => [$id]]);
+        $publicationsUser = $doctrine->getRepository(Publication::class)->findBy(['user' => $user, 'publiSuivie' => 1]);
+
+        foreach($publicationsUser as $publi){
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($publi);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('User.accueil');
+    }
+
 }

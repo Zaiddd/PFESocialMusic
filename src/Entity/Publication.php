@@ -81,6 +81,16 @@ class Publication implements \Serializable
      */
     private $idUserOriginal;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $publiSuivie;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $userAyantSuivi;
+
     public function __construct()
     {
         $this->signals = new ArrayCollection();
@@ -294,6 +304,30 @@ class Publication implements \Serializable
     public function setIdUserOriginal(?int $idUserOriginal): self
     {
         $this->idUserOriginal = $idUserOriginal;
+
+        return $this;
+    }
+
+    public function getPubliSuivie(): ?bool
+    {
+        return $this->publiSuivie;
+    }
+
+    public function setPubliSuivie(?bool $publiSuivie): self
+    {
+        $this->publiSuivie = $publiSuivie;
+
+        return $this;
+    }
+
+    public function getUserAyantSuivi(): ?int
+    {
+        return $this->userAyantSuivi;
+    }
+
+    public function setUserAyantSuivi(?int $userAyantSuivi): self
+    {
+        $this->userAyantSuivi = $userAyantSuivi;
 
         return $this;
     }

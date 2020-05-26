@@ -72,6 +72,7 @@ class PublicationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid())
         {
+            $publication->setPubliSuivie(0);
             $publication->setNbLike(0);
             $publication->setNbDislike(0);
             if($form->get('champPhoto')->getData() != null){
@@ -164,6 +165,7 @@ class PublicationController extends AbstractController
         $publication->setNbDislike(0);
         $publication->setUserOriginal($idPubli->getUser()->getPseudo());
         $publication->setIdUserOriginal($idPubli->getUser()->getId());
+        $publication->setPubliSuivie(0);
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($publication);
@@ -191,6 +193,7 @@ class PublicationController extends AbstractController
         $publication->setNbDislike(0);
         $publication->setUserOriginal($idPubli->getUser()->getPseudo());
         $publication->setIdUserOriginal($idPubli->getUser()->getId());
+        $publication->setPubliSuivie(0);
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($publication);
