@@ -53,6 +53,7 @@
                     </div>
 
                     <br>
+                    <small><i>Tags : {% if publi.tags == null %} Aucun tag {% else %} {{ publi.tags }} {% endif %} </i></small>
                     <hr>
                     <a href="{{ publi.id }}/liker" id="like"><img style="max-width: 75px; max-height: 40px" src="{{ asset('img/likeTest.jpg') }}" alt=""></a>
                     <label class="lDislike">{{ publi.nbLike }}</label>

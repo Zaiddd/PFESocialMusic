@@ -60,7 +60,7 @@
                 {#<div style="text-align: center">
                     <iframe src="https://open.spotify.com/embed/track/4wdJ33LQeaYBdXLKYVHxrE?si=HimiPAPSQV6E5xsVOBLTCw" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
                 </div>#}
-                <small><i>Tags : {{ publi.tags }}</i></small>
+                <small><i>Tags : {% if publi.tags == null %} Aucun tag {% else %} {{ publi.tags }} {% endif %} </i></small>
                 <hr>
 
                 <a href="{{ publi.id }}/liker" id="like"><img style="max-width: 75px; max-height: 40px" src="{{ asset('img/likeTest.jpg') }}" alt=""></a>
