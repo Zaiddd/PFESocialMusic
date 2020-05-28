@@ -480,11 +480,14 @@ class UserController extends AbstractController
         $userConnecte = $doctrine->getRepository(User::class)->find($this->getUser()->getId());
         $publicationsUser = $doctrine->getRepository(Publication::class)->findBy(['user' => $user, 'publiSuivie' => 1]);
 
+
         foreach($publicationsUser as $publi){
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($publi);
             $entityManager->flush();
         }
+
+
 
         $arrayUsersSuivis = $userConnecte->getUserSuivis();
         if($user->getId() == $arrayUsersSuivis) {

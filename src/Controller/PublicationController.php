@@ -117,13 +117,25 @@ class PublicationController extends AbstractController
     {
         $idPubli = $doctrine->getRepository(Publication::class)->find((int)$request->attributes->get('id'));
         $signal = $doctrine->getRepository(Signal::class)->findOneBy(['publication' => $idPubli]);
-        //$userPubli = $doctrine->getRepository(Publication::class)->findOneBy(['user' => $idPubli->getUser()->getId()]);
+        $userPubli = $doctrine->getRepository(Publication::class)->findOneBy(['user' => $idPubli->getUser()->getId()]);
+        $allPubli = $doctrine->getRepository(Publication::class)->findAll();
         $entityManager = $this->getDoctrine()->getManager();
+
+        foreach($allPubli as $publiSite){
+            if($publiSite->getIdUserOriginal() == $this->getUser()->getId()){
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($publiSite);
+                $entityManager->flush();
+            }
+        }
+
         if($signal != null)
             $entityManager->remove($signal);
         //$entityManager->remove($userPubli);
         $entityManager->remove($idPubli);
         $entityManager->flush();
+
+
 
         return $this->redirectToRoute('User.accueil');
     }
@@ -137,6 +149,16 @@ class PublicationController extends AbstractController
         $signal = $doctrine->getRepository(Signal::class)->findOneBy(['publication' => $idPubli]);
         $userPubli = $doctrine->getRepository(Publication::class)->findOneBy(['user' => $idPubli->getUser()->getId()]);
         $entityManager = $this->getDoctrine()->getManager();
+        $allPubli = $doctrine->getRepository(Publication::class)->findAll();
+
+        foreach($allPubli as $publiSite){
+            if($publiSite->getIdUserOriginal() == $this->getUser()->getId()){
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($publiSite);
+                $entityManager->flush();
+            }
+        }
+
         if($signal != null)
             $entityManager->remove($signal);
         $entityManager->remove($userPubli);
