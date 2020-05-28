@@ -435,6 +435,7 @@ class UserController extends AbstractController
     public function suivreUser(UserRepository $userRepository, EntityManagerInterface $doctrine, $id): Response
     {
         $user = $doctrine->getRepository(User::class)->findOneBy(['id' => [$id]]);
+        $userConnecte = $doctrine->getRepository(User::class)->find($this->getUser()->getId());
         $publicationsUser = $doctrine->getRepository(Publication::class)->findBy(['user' => $user]);
 
         foreach($publicationsUser as $publi){
@@ -458,6 +459,15 @@ class UserController extends AbstractController
             $entityManager->flush();
         }
 
+        $arrayUsersSuivis = $userConnecte->getUserSuivis();
+        if($arrayUsersSuivis == null){
+            $userConnecte->setUserSuivis(array($publi->getUser()->getId()));
+        }
+        else{
+            array_push($arrayUsersSuivis, $publi->getUser()->getId());
+            $userConnecte->setUserSuivis($arrayUsersSuivis);
+        }
+
         return $this->redirectToRoute('User.accueil');
     }
 
@@ -467,12 +477,18 @@ class UserController extends AbstractController
     public function desabonner(UserRepository $userRepository, EntityManagerInterface $doctrine, $id): Response
     {
         $user = $doctrine->getRepository(User::class)->findOneBy(['id' => [$id]]);
+        $userConnecte = $doctrine->getRepository(User::class)->find($this->getUser()->getId());
         $publicationsUser = $doctrine->getRepository(Publication::class)->findBy(['user' => $user, 'publiSuivie' => 1]);
 
         foreach($publicationsUser as $publi){
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($publi);
             $entityManager->flush();
+        }
+
+        $arrayUsersSuivis = $userConnecte->getUserSuivis();
+        if($user->getId() == $arrayUsersSuivis) {
+            var_dump("dedans");
         }
 
         return $this->redirectToRoute('User.accueil');

@@ -109,6 +109,11 @@ class User extends BaseUser implements UserInterface, \Serializable, EquatableIn
      */
     private $estBanni;
 
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $userSuivis = [];
+
     public function __construct()
     {
         parent::__construct();
@@ -442,6 +447,18 @@ class User extends BaseUser implements UserInterface, \Serializable, EquatableIn
     public function setEstBanni(bool $estBanni): self
     {
         $this->estBanni = $estBanni;
+
+        return $this;
+    }
+
+    public function getUserSuivis(): ?array
+    {
+        return $this->userSuivis;
+    }
+
+    public function setUserSuivis(?array $userSuivis): self
+    {
+        $this->userSuivis = $userSuivis;
 
         return $this;
     }
