@@ -91,6 +91,11 @@ class Publication implements \Serializable
      */
     private $userAyantSuivi;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $tags;
+
     public function __construct()
     {
         $this->signals = new ArrayCollection();
@@ -328,6 +333,18 @@ class Publication implements \Serializable
     public function setUserAyantSuivi(?int $userAyantSuivi): self
     {
         $this->userAyantSuivi = $userAyantSuivi;
+
+        return $this;
+    }
+
+    public function getTags(): ?string
+    {
+        return $this->tags;
+    }
+
+    public function setTags(?string $tags): self
+    {
+        $this->tags = $tags;
 
         return $this;
     }

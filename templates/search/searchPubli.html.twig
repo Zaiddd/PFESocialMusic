@@ -1,0 +1,44 @@
+{% extends 'base.html.twig'%}
+
+{% block title %}Rechercher une publication{% endblock %}
+
+{% block body %}
+
+    <form method="post" class="w-100 p-3 shadow p-3 mb-5 bg-white" style=" border-radius: 10px">
+        <h1>Chercher une publication</h1><button type="button" class="btn btn-warning"><a style="text-decoration: none; color:black;" href="{{ path('Search.Options') }}" tabindex="-1" >Retour</a></button>
+
+        <div class="form-group">
+            {% form_theme searchForm 'bootstrap_4_layout.html.twig' %}
+            {{ form_start(searchForm) }}
+            {{ form_row(searchForm.tags, {'label': " ", 'attr': {'placeholder': 'Mot clé...'}}) }}
+            <button class="btn btn-primary">Rechercher</button>
+            {{ form_end(searchForm) }}
+
+
+            <section id="content">
+
+                {% for publi in publication %}
+                        <article>
+                            <div class="card border-light mb-3" id="articlesRecents" style="max-width: 25rem;margin:1.5em">
+                                <div class="card-header">
+
+                                    <h4>Publication de {{ publi.user.pseudo }}</h4>
+                                    <small><i>Tags : {% if publi.tags == null %} Aucun tag {% else %} {{ publi.tags }} {% endif %}</i></small>
+                                </div>
+                                <div class="card-body">
+
+                                    <a href="/publication/{{ publi.id }}" class="btn btn-primary">Consulter la publication</a>
+                                </div>
+                            </div>
+                        </article>
+                {% endfor %}
+
+            </section>
+        </div>
+    </form>
+
+    <div class="pagination">
+        {{ knp_pagination_render(publication) }}
+    </div>
+
+{% endblock %}

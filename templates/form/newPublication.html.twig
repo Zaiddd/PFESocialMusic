@@ -11,6 +11,7 @@
     {{ form_row(form._token) }}
     {{ form_row(form.commentaire, {'label': 'Exprimez-vous '}) }}
     {{ form_row(form.champPhoto, {'label': 'Choisir une photo ? ' | default }) }}
+    {{ form_row(form.tags, {'label': 'Tags' }) }}
     {{ form_errors(form) }}
     <input type="hidden" value="{{ id.id }}" name="user.id" id="user.id" class="form-control">
     <button class="btn btn-primary" type="submit"> {{ button_label | default('Confirmer') }} </button>

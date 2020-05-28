@@ -1,0 +1,16 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Que rechercher ?{% endblock %}
+
+{% block body %}
+
+    <form method="post" class="w-50 p-3 shadow p-3 mb-5 bg-white" style="margin-left: 25%; margin-top: 5%; border-radius: 10px">
+        <div class="row-fluid" style="text-align: center">
+            <h2>Choisissez la recherche souhaitée</h2><br><br>
+            <button type="button" class="btn btn-warning"><a style="text-decoration: none; color:black;" href="{{ path('User.search') }}" tabindex="-1" >Rechercher un utilisateur</a></button>
+            <button type="button" class="btn btn-info"><a style="text-decoration: none; color: white" href="{{ path('User.searchPubli') }}">Rechercher du contenu</a></button>
+            <br><br>
+        </div>
+    </form>
+
+{% endblock %}

@@ -6,6 +6,8 @@ namespace App\Controller;
 
 use App\Form\CommentPublicationForm;
 use App\Form\SearchForm;
+use App\Form\SearchPubliForm;
+use App\Repository\PublicationRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -138,6 +140,54 @@ class SearchController extends AbstractController
             'idPubli' => $idPubli,
             'newComment' => $newComment,
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/search/optionsMenu", name="Search.Options", methods={"GET","POST"})
+     */
+    public function choixRegister(Request $request, UserPasswordEncoderInterface $encoder): Response
+    {
+        return $this->render('search/searchOptions.html.twig');
+    }
+
+    /**
+     * @Route("/recherchePubli", name="User.searchPubli")
+     */
+    public function recherchePubli(Request $request, PublicationRepository $repo, PaginatorInterface $paginator) {
+
+        $searchForm = $this->createForm(SearchPubliForm::class);
+        $searchForm->handleRequest($request);
+
+        $donnees = $repo->findAll();
+
+        if ($searchForm->isSubmitted() && $searchForm->isValid()) {
+
+            $tags = $searchForm->getData()->getTags();
+
+            $donnees = $repo->search($tags);
+
+
+            if ($donnees == null) {
+                $this->addFlash('erreur', 'Aucune publication comportant ce tag saisi. Réessayez un autre.');
+
+            }
+
+        }
+
+        // Paginate the results of the query
+        $publication = $paginator->paginate(
+        // Doctrine Query, not results
+            $donnees,
+            // Define the page parameter
+            $request->query->getInt('page', 1),
+            // Items per page
+            4
+        );
+
+        return $this->render('search/searchPubli.html.twig',[
+            'publication' => $publication,
+            'searchForm' => $searchForm->createView()
         ]);
     }
 }

@@ -47,4 +47,12 @@ class PublicationRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function search($tags) {
+        return $this->createQueryBuilder('Publication')
+            ->andWhere('Publication.tags LIKE :tags')
+            ->setParameter('tags', '%'.$tags.'%')
+            ->getQuery()
+            ->execute();
+    }
 }
