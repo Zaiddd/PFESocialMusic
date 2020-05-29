@@ -47,7 +47,12 @@
                 -
                 <a href="/users/{{ publi.user.id }}/{% if publi.publiSuivie == 0 %}suivre{% else %}desabonner{% endif %}">{% if publi.publiSuivie == 0 %}Suivre{% else %}Se désabonner{% endif %}</a>
 
-                <a style="margin-left: 3%; float: right" href="{{ publi.id }}/signaler">Signaler</a>
+                <a style="margin-left: 3%; float: right; text-decoration: none" href="/{{ publi.id }}/signaler">
+                    <span class="icon-stack">
+                      <i class="icon-circle icon-stack-base"></i>
+                      <i class="icon-flag icon-light"></i>
+                    </span>
+                </a>
                 {% if app.user == publi.user %}
                     {% if publi.publiSuivie == 0 %}
                 <h4 style="float:right; ">
@@ -70,15 +75,15 @@
                 <small><i>Tags : {% if publi.tags == null %} Aucun tag {% else %} {{ publi.tags }} {% endif %} </i></small>
                 <hr>
 
-                <a href="{{ publi.id }}/liker" id="like"><img style="max-width: 75px; max-height: 40px" src="{{ asset('img/likeTest.jpg') }}" alt=""></a>
+                <a href="/{{ publi.id }}/liker" id="like" style="text-decoration: none; color: green; {% if app.user.id in publi.listeUserQuiLike %}text-shadow: 0 0 3px green;{% endif %}"><i class="icon-thumbs-up-alt icon-2x"></i></a>
                 <label class="lLike" >{{publi.nbLike}}</label>
 
-                <a href="{{ publi.id }}/disliker" id="dislike" style="margin-left: 3%"><img style="max-width: 80px; max-height: 45px" src="{{ asset('img/dislike.png') }}" alt=""></a>
+                <a href="/{{ publi.id }}/disliker" id="dislike" style="margin-left: 3%; text-decoration: none; color: red;{% if app.user.id in publi.listeUserQuiDislike %}text-shadow: 0 0 3px red;{% endif %}"><i class="icon-thumbs-down-alt icon-2x"></i></a>
                 <label class="lDislike">{{ publi.nbDislike }}</label>
 
                 {% if publi.partage == 0 %}
-                <a style="margin-left: 3%" href="{{ publi.id }}/commenter">Commenter</a>
-                <a style="float:right;" href="{{ publi.id }}/partager" id="partager"><img style="max-width: 80px; max-height: 45px" src="{{ asset('img/share.png') }}" alt=""></a>
+                <a style="margin-left: 3%; text-decoration: none; color: darkcyan" href="/{{ publi.id }}/commenter"><i class="icon-comments-alt icon-2x"></i></a>
+                <a style="float:right; text-decoration: none" href="/{{ publi.id }}/partager" id="partager"><i class="icon-share icon-2x"></i></a>
 
                 <hr>
                 <b><label>Commentaires</label></b><br><br>

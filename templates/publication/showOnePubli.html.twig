@@ -12,6 +12,14 @@
             </h4>
         {% endif %}
     {% endif %}
+
+    <a style="margin-left: 3%; float: right; text-decoration: none" href="/{{ publication.id }}/signaler">
+        <span class="icon-stack">
+            <i class="icon-circle icon-stack-base"></i>
+            <i class="icon-flag icon-light"></i>
+        </span>
+    </a>
+
     <hr>
 
     <span style="margin-left: 5%; max-width: 750px;"></span>{{ publication.commentaire }}<br><br>
@@ -26,15 +34,15 @@
     <small><i>Tags : {% if publication.tags == null %} Aucun tag {% else %} {{ publication.tags }} {% endif %} </i></small>
     <hr>
 
-    <a href="/users/{{ publication.id }}/liker" id="like"><img style="max-width: 75px; max-height: 40px" src="{{ asset('img/likeTest.jpg') }}" alt=""></a>
+    <a href="/users/{{ publication.id }}/liker" id="like" style="text-decoration: none; color: green; {% if app.user.id in publication.listeUserQuiLike %}text-shadow: 0 0 3px green;{% endif %}"><i class="icon-thumbs-up-alt icon-2x"></i></a>
     <label class="lLike" >{{publication.nbLike}}</label>
 
-    <a href="/users/{{ publication.id }}/disliker" id="dislike" style="margin-left: 3%"><img style="max-width: 80px; max-height: 45px" src="{{ asset('img/dislike.png') }}" alt=""></a>
+    <a href="/users/{{ publication.id }}/disliker" id="dislike" style="margin-left: 3%; text-decoration: none; color: red;{% if app.user.id in publication.listeUserQuiDislike %}text-shadow: 0 0 3px red;{% endif %}"><i class="icon-thumbs-down-alt icon-2x"></i></a>
     <label class="lDislike">{{ publication.nbDislike }}</label>
 
     {% if publication.partage == 0 %}
-    <a style="margin-left: 3%" href="/{{ publication.id }}/commenter">Commenter</a>
-    <a style="float:right;" href="/{{ publication.id }}/partager" id="partager"><img style="max-width: 80px; max-height: 45px" src="{{ asset('img/share.png') }}" alt=""></a>
+        <a style="margin-left: 3%; text-decoration: none; color: darkcyan" href="/users/{{ publication.id }}/commenter"><i class="icon-comments-alt icon-2x"></i></a>
+        <a style="float:right; text-decoration: none" href="/{{ publication.id }}/partager" id="partager"><i class="icon-share icon-2x"></i></a>
 
     <hr>
     <b><label>Commentaires</label></b><br><br>
