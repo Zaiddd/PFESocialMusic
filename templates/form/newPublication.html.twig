@@ -12,6 +12,10 @@
     {{ form_row(form.commentaire, {'label': 'Exprimez-vous '}) }}
     {{ form_row(form.champPhoto, {'label': 'Choisir une photo ? ' | default }) }}
     {{ form_row(form.tags, {'label': 'Tags' }) }}
+    {{ form_row(form.spotify, {'label': 'Ajouter une musique via Spotify' }) }}
+    {#{ form_row(form.deezer, {'label': 'Ajouter une musique via Deezer' }) }#}
+    <small>Il faut saisir le lien d'une musique. Exemple : <a href="https://developer.spotify.com/documentation/widgets/generate/play-button/">Exemple Spotify</a><br>
+            Saisissez la partie à partir de "/track/" (dont /track/).</small><br><br>
     {{ form_errors(form) }}
     <input type="hidden" value="{{ id.id }}" name="user.id" id="user.id" class="form-control">
     <button class="btn btn-primary" type="submit"> {{ button_label | default('Confirmer') }} </button>

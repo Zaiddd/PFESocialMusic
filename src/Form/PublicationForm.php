@@ -33,6 +33,10 @@ class PublicationForm extends AbstractType
                 [ 'required' => false])
             ->add('tags', TextType::class,
                 [ 'required' => false])
+            ->add('spotify', TextType::class,
+                [ 'required' => false])
+            //->add('deezer', TextType::class,
+             //   [ 'required' => false])
         ;
     }
 

@@ -188,6 +188,8 @@ class PublicationController extends AbstractController
         $publication->setUserOriginal($idPubli->getUser()->getPseudo());
         $publication->setIdUserOriginal($idPubli->getUser()->getId());
         $publication->setPubliSuivie(0);
+        $publication->setSpotify($idPubli->getSpotify());
+        $publication->setDeezer($idPubli->getDeezer());
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($publication);

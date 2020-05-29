@@ -1,20 +1,17 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 
-<div class="container" style="width: 200%; height: 500px;">
+<div class="container" style=" height: 350px;">
     <hr>
-    <br><br>
-        <h5>{{ idPubli.user.pseudo }}</h5>
-        {{ idPubli.commentaire }}
+        <h5>{{ idPubli.user.pseudo }}</h5><br>
+        <span style="margin-left: 3%"></span>{{ idPubli.commentaire }}
         {#{idPubli.champPhoto}#}
         <br><br><br><br>
 
 
         {{ form_start(form) }}
         {{ form_row(form._token) }}
-        {{ form_row(form.newComment, {'label': 'Votre commentaire '}) }}
+        <b>{{ form_row(form.newComment, {'label': 'Votre commentaire '}) }}</b>
         {{ form_errors(form) }}
-
-
 
     <button class="btn btn-primary"> {{ button_label | default('Confirmer') }} </button>
 </div>

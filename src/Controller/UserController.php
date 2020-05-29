@@ -455,6 +455,8 @@ class UserController extends AbstractController
             $newPubli->setIdUserOriginal($publi->getUser()->getId());
             $newPubli->setPubliSuivie(1);
             $newPubli->setUserAyantSuivi($this->getUser()->getId());
+            $newPubli->setSpotify($publi->getSpotify());
+            $newPubli->setDeezer($publi->getDeezer());
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($newPubli);

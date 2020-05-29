@@ -106,6 +106,16 @@ class Publication implements \Serializable
      */
     private $listeUserQuiDislike = [];
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $spotify;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $deezer;
+
     public function __construct()
     {
         $this->signals = new ArrayCollection();
@@ -379,6 +389,30 @@ class Publication implements \Serializable
     public function setListeUserQuiDislike(?array $listeUserQuiDislike): self
     {
         $this->listeUserQuiDislike = $listeUserQuiDislike;
+
+        return $this;
+    }
+
+    public function getSpotify(): ?string
+    {
+        return $this->spotify;
+    }
+
+    public function setSpotify(?string $spotify): self
+    {
+        $this->spotify = $spotify;
+
+        return $this;
+    }
+
+    public function getDeezer(): ?string
+    {
+        return $this->deezer;
+    }
+
+    public function setDeezer(?string $deezer): self
+    {
+        $this->deezer = $deezer;
 
         return $this;
     }

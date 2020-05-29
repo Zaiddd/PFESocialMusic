@@ -60,7 +60,16 @@
                         <img style="max-width: 750px; max-height: 700px; border-radius: 8px;" alt="" src="../../../../../uploads/{{ publi.getChampPhoto()}}">
                     </div>
 
-                    <br>
+                    {% if publi.spotify != null %}
+                        <div style="text-align: center">
+                            <iframe src="{{ publi.spotify }}" width="250" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                        </div>
+                    {% endif %}
+
+                    {% if publi.deezer != null %}
+                        <iframe scrolling="no" frameborder="0" allowTransparency="true" src="{{ publi.deezer }}"  width="250" height="200"></iframe>
+                    {% endif %}
+
                     <small><i>Tags : {% if publi.tags == null %} Aucun tag {% else %} {{ publi.tags }} {% endif %} </i></small>
                     <hr>
                     <a href="/{{ publi.id }}/liker" id="like" style="text-decoration: none; color: green; {% if app.user.id in publi.listeUserQuiLike %}text-shadow: 0 0 3px green;{% endif %}"><i class="icon-thumbs-up-alt icon-2x"></i></a>
