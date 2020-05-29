@@ -5,20 +5,22 @@
 <div class="p-3 shadow p-3 mb-5 bg-white" style="width: 75%; margin: 0 auto; height: fit-content; border-radius: 10px" >
     <h5 style="display: inline"><a style="color: black" href="users/{{ user.id }}">{{ user.pseudo }}</a></h5>
 
-    {% if app.user == publication.user %}
+    {% if app.user == publication.user or app.user.pseudo == "admin" %}
         {% if publication.publiSuivie == 0 %}
             <h4 style="float:right; ">
-                <a href="{{ publication.id }}/deletePubli" onclick="return confirm('Êtes-vous sûrs de vouloir supprimer cette publication ?')" style="text-decoration: none; color: red">X</a>
+                <a href="/{{ publication.id }}/deletePubli" onclick="return confirm('Êtes-vous sûrs de vouloir supprimer cette publication ?')" style="text-decoration: none; color: red">X</a>
             </h4>
         {% endif %}
     {% endif %}
 
-    <a style="margin-left: 3%; float: right; text-decoration: none" href="/{{ publication.id }}/signaler">
-        <span class="icon-stack">
-            <i class="icon-circle icon-stack-base"></i>
-            <i class="icon-flag icon-light"></i>
-        </span>
-    </a>
+    {% if app.user.pseudo != "admin" %}
+        <a style="margin-left: 3%; float: right; text-decoration: none" href="/{{ publication.id }}/signaler">
+            <span class="icon-stack">
+                <i class="icon-circle icon-stack-base"></i>
+                <i class="icon-flag icon-light"></i>
+            </span>
+        </a>
+    {% endif %}
 
     <hr>
 
@@ -29,7 +31,7 @@
 
     {% if publication.spotify != null %}
         <div style="text-align: center">
-            <iframe src="{{ publication.spotify }}" width="250" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+            <iframe src="https://open.spotify.com/embed{{ publication.spotify }}" width="250" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
         </div>
     {% endif %}
 
@@ -40,16 +42,19 @@
     <small><i>Tags : {% if publication.tags == null %} Aucun tag {% else %} {{ publication.tags }} {% endif %} </i></small>
     <hr>
 
-    <a href="/users/{{ publication.id }}/liker" id="like" style="text-decoration: none; color: green; {% if app.user.id in publication.listeUserQuiLike %}text-shadow: 0 0 3px green;{% endif %}"><i class="icon-thumbs-up-alt icon-2x"></i></a>
+    {% if app.user.pseudo != "admin" %}<a href="/users/{{ publication.id }}/liker" id="like" style="text-decoration: none; color: green; {% if app.user.id in publication.listeUserQuiLike %}text-shadow: 0 0 3px green;{% endif %}"><i class="icon-thumbs-up-alt icon-2x"></i></a>
+    {% else %}<i class="icon-thumbs-up-alt icon-2x" style="color: green"></i>{% endif %}
     <label class="lLike" >{{publication.nbLike}}</label>
 
-    <a href="/users/{{ publication.id }}/disliker" id="dislike" style="margin-left: 3%; text-decoration: none; color: red;{% if app.user.id in publication.listeUserQuiDislike %}text-shadow: 0 0 3px red;{% endif %}"><i class="icon-thumbs-down-alt icon-2x"></i></a>
+    {% if app.user.pseudo != "admin" %}<a href="/users/{{ publication.id }}/disliker" id="dislike" style="margin-left: 3%; text-decoration: none; color: red;{% if app.user.id in publication.listeUserQuiDislike %}text-shadow: 0 0 3px red;{% endif %}"><i class="icon-thumbs-down-alt icon-2x"></i></a>
+    {% else %}<i class="icon-thumbs-down-alt icon-2x" style="color: red; margin-left: 2%"></i>{% endif %}
     <label class="lDislike">{{ publication.nbDislike }}</label>
 
     {% if publication.partage == 0 %}
-        <a style="margin-left: 3%; text-decoration: none; color: darkcyan" href="/users/{{ publication.id }}/commenter"><i class="icon-comments-alt icon-2x"></i></a>
-        <a style="float:right; text-decoration: none" href="/{{ publication.id }}/partager" id="partager"><i class="icon-share icon-2x"></i></a>
-
+        {% if app.user.pseudo != "admin" %}
+            <a style="margin-left: 3%; text-decoration: none; color: darkcyan" href="/users/{{ publication.id }}/commenter"><i class="icon-comments-alt icon-2x"></i></a>
+            <a style="float:right; text-decoration: none" href="/{{ publication.id }}/partager" id="partager"><i class="icon-share icon-2x"></i></a>
+        {% endif %}
     <hr>
     <b><label>Commentaires</label></b><br><br>
     <div style="margin-left: 6%">
