@@ -141,7 +141,7 @@ class PublicationController extends AbstractController
     }
 
     /**
-     * @Route("publicationSignalee/{id}/deletePubli", name="Publi.deleteFromSignal")
+     * @Route("/publicationSignalee/{id}/deletePubli", name="Publi.deleteFromSignal")
      */
     public function deletePubliFromSignal(ManagerRegistry $doctrine, Request $request)
     {
@@ -197,7 +197,7 @@ class PublicationController extends AbstractController
     }
 
     /**
-     * @Route("users/{id}/partager", name="Publi.partagerFromSearch")
+     * @Route("/users/{id}/partager", name="Publi.partagerFromSearch")
      */
     public function partagerPubliFromSearch(ManagerRegistry $doctrine, Request $request, $id)
     {
@@ -240,7 +240,7 @@ class PublicationController extends AbstractController
     }
 
     /**
-     * @Route("publication/users/{id}", name="Publi.showProfilFromPubli")
+     * @Route("/publication/users/{id}", name="Publi.showProfilFromPubli")
      */
     public function showUserDePubli(ManagerRegistry $doctrine, $id)
     {
@@ -355,7 +355,7 @@ class PublicationController extends AbstractController
     }
 
     /**
-     * @Route("users/{id}/disliker", name="Publi.DislikerFromSearch")
+     * @Route("/users/{id}/disliker", name="Publi.DislikerFromSearch")
      */
     public function dislikePubliFromSearch(ManagerRegistry $doctrine, $id)
     {

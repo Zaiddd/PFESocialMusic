@@ -45,7 +45,7 @@ class SignalController extends AbstractController
     }
 
     /**
-     * @Route("users/{id}/signaler", name="Publication.SignalerFromSearch", methods={"GET","POST"})
+     * @Route("/users/{id}/signaler", name="Publication.SignalerFromSearch", methods={"GET","POST"})
      */
     public function newSignalFromSearch(Request $request, UserPasswordEncoderInterface $encoder, ManagerRegistry $doctrine, $id): Response
     {
@@ -96,7 +96,7 @@ class SignalController extends AbstractController
     }
 
     /**
-     * @Route("deleteSignal/{id}", name="Admin.deleteSignal")
+     * @Route("/deleteSignal/{id}", name="Admin.deleteSignal")
      */
     public function deleteSignal(ManagerRegistry $doctrine, Request $request, $id)
     {

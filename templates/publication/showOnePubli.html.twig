@@ -5,9 +5,13 @@
 <div class="p-3 shadow p-3 mb-5 bg-white" style="width: 75%; margin: 0 auto; height: fit-content; border-radius: 10px" >
     <h5 style="display: inline"><a style="color: black" href="users/{{ user.id }}">{{ user.pseudo }}</a></h5>
 
-        <h4 style="float:right; ">
-            <a href="{{ publication.id }}/deletePubli" onclick="return confirm('Êtes-vous sûrs de vouloir supprimer cette publication ?')" style="text-decoration: none; color: red">X</a>
-        </h4>
+    {% if app.user == publication.user %}
+        {% if publication.publiSuivie == 0 %}
+            <h4 style="float:right; ">
+                <a href="{{ publication.id }}/deletePubli" onclick="return confirm('Êtes-vous sûrs de vouloir supprimer cette publication ?')" style="text-decoration: none; color: red">X</a>
+            </h4>
+        {% endif %}
+    {% endif %}
     <hr>
 
     <span style="margin-left: 5%; max-width: 750px;"></span>{{ publication.commentaire }}<br><br>
@@ -16,6 +20,21 @@
     </div>
 
     <br>
+    {#<div style="text-align: center">
+        <iframe src="https://open.spotify.com/embed/track/4wdJ33LQeaYBdXLKYVHxrE?si=HimiPAPSQV6E5xsVOBLTCw" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+    </div>#}
+    <small><i>Tags : {% if publication.tags == null %} Aucun tag {% else %} {{ publication.tags }} {% endif %} </i></small>
+    <hr>
+
+    <a href="/users/{{ publication.id }}/liker" id="like"><img style="max-width: 75px; max-height: 40px" src="{{ asset('img/likeTest.jpg') }}" alt=""></a>
+    <label class="lLike" >{{publication.nbLike}}</label>
+
+    <a href="/users/{{ publication.id }}/disliker" id="dislike" style="margin-left: 3%"><img style="max-width: 80px; max-height: 45px" src="{{ asset('img/dislike.png') }}" alt=""></a>
+    <label class="lDislike">{{ publication.nbDislike }}</label>
+
+    {% if publication.partage == 0 %}
+    <a style="margin-left: 3%" href="/{{ publication.id }}/commenter">Commenter</a>
+    <a style="float:right;" href="/{{ publication.id }}/partager" id="partager"><img style="max-width: 80px; max-height: 45px" src="{{ asset('img/share.png') }}" alt=""></a>
 
     <hr>
     <b><label>Commentaires</label></b><br><br>
@@ -26,13 +45,22 @@
             {% set u = user %}
         {% endfor %}
 
-        {% for rep in publication.reponses %}
+        {% if publication.reponses == null %}
             <div>
-                <b><a style="text-decoration: none" href="/users/{{ u.id }}">{{ u }}</a></b><br>
-                <span style="margin-left: 2%"></span>{{ rep }}<br><br>
+                <small>Aucun commentaire</small>
             </div>
-        {% endfor %}
+        {% else %}
+
+            {% for rep in publication.reponses %}
+                <div>
+                    <b><a style="text-decoration: none" href="/users/{{ u.id }}">{{ u }}</a></b><br>
+                    <span style="margin-left: 2%"></span>{{ rep }}<br><br>
+                </div>
+            {% endfor %}
+
+        {% endif %}
     </div>
+    {% endif %}
 </div>
 
 {% endblock %}
