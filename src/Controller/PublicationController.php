@@ -259,11 +259,24 @@ class PublicationController extends AbstractController
     {
         $publication = $doctrine->getRepository(Publication::class)->findOneBy(['id' => [$id]]);
 
-        if($publication->getUserALiker()->getListeLikes() != $publication) {
+        $arrayUserQuiLike = $publication->getListeUserQuiLike();
+        $arrayUserQuiDislike = $publication->getListeUserQuiDislike();
 
+        if(in_array($this->getUser()->getId(), $arrayUserQuiLike) == false) {
+            $publication->setNbLike($publication->getNbLike() + 1);
+            array_push($arrayUserQuiLike, $this->getUser()->getId());
+            $publication->setListeUserQuiLike($arrayUserQuiLike);
         }
-        else {
+        else{
+            $publication->setNbLike($publication->getNbLike() - 1);
+            array_splice($arrayUserQuiLike, array_search($this->getUser()->getId(), $arrayUserQuiLike), 1);
+            $publication->setListeUserQuiLike($arrayUserQuiLike);
+        }
 
+        if(in_array($this->getUser()->getId(), $arrayUserQuiDislike) == true){
+            $publication->setNbDislike($publication->getNbDislike() - 1);
+            array_splice($arrayUserQuiDislike, array_search($this->getUser()->getId(), $arrayUserQuiDislike), 1);
+            $publication->setListeUserQuiDislike($arrayUserQuiDislike);
         }
 
         $entityManager = $this->getDoctrine()->getManager();
@@ -280,11 +293,24 @@ class PublicationController extends AbstractController
     {
         $publication = $doctrine->getRepository(Publication::class)->findOneBy(['id' => [$id]]);
 
-        if($publication->getNbLike() == 0){
+        $arrayUserQuiLike = $publication->getListeUserQuiLike();
+        $arrayUserQuiDislike = $publication->getListeUserQuiDislike();
 
+        if(in_array($this->getUser()->getId(), $arrayUserQuiLike) == false) {
+            $publication->setNbLike($publication->getNbLike() + 1);
+            array_push($arrayUserQuiLike, $this->getUser()->getId());
+            $publication->setListeUserQuiLike($arrayUserQuiLike);
         }
         else{
+            $publication->setNbLike($publication->getNbLike() - 1);
+            array_splice($arrayUserQuiLike, array_search($this->getUser()->getId(), $arrayUserQuiLike), 1);
+            $publication->setListeUserQuiLike($arrayUserQuiLike);
+        }
 
+        if(in_array($this->getUser()->getId(), $arrayUserQuiDislike) == true){
+            $publication->setNbDislike($publication->getNbDislike() - 1);
+            array_splice($arrayUserQuiDislike, array_search($this->getUser()->getId(), $arrayUserQuiDislike), 1);
+            $publication->setListeUserQuiDislike($arrayUserQuiDislike);
         }
 
         $entityManager = $this->getDoctrine()->getManager();
@@ -301,10 +327,24 @@ class PublicationController extends AbstractController
     {
         $publication = $doctrine->getRepository(Publication::class)->findOneBy(['id' => [$id]]);
 
-        if($publication->getNbDislike() == 0){
+        $arrayUserQuiLike = $publication->getListeUserQuiLike();
+        $arrayUserQuiDislike = $publication->getListeUserQuiDislike();
 
+        if(in_array($this->getUser()->getId(), $arrayUserQuiDislike) == false) {
+            $publication->setNbDislike($publication->getNbDislike() + 1);
+            array_push($arrayUserQuiDislike, $this->getUser()->getId());
+            $publication->setListeUserQuiDislike($arrayUserQuiDislike);
         }
         else{
+            $publication->setNbDislike($publication->getNbDislike() - 1);
+            array_splice($arrayUserQuiDislike, array_search($this->getUser()->getId(), $arrayUserQuiDislike), 1);
+            $publication->setListeUserQuiDislike($arrayUserQuiDislike);
+        }
+
+        if(in_array($this->getUser()->getId(), $arrayUserQuiLike) == true){
+            $publication->setNbLike($publication->getNbLike() - 1);
+            array_splice($arrayUserQuiLike, array_search($this->getUser()->getId(), $arrayUserQuiLike), 1);
+            $publication->setListeUserQuiLike($arrayUserQuiLike);
         }
 
         $entityManager = $this->getDoctrine()->getManager();
@@ -321,11 +361,24 @@ class PublicationController extends AbstractController
     {
         $publication = $doctrine->getRepository(Publication::class)->findOneBy(['id' => [$id]]);
 
-        if($publication->getNbDislike() == 0) {
+        $arrayUserQuiLike = $publication->getListeUserQuiLike();
+        $arrayUserQuiDislike = $publication->getListeUserQuiDislike();
 
+        if(in_array($this->getUser()->getId(), $arrayUserQuiDislike) == false) {
+            $publication->setNbDislike($publication->getNbDislike() + 1);
+            array_push($arrayUserQuiDislike, $this->getUser()->getId());
+            $publication->setListeUserQuiDislike($arrayUserQuiDislike);
         }
-        else {
+        else{
+            $publication->setNbDislike($publication->getNbDislike() - 1);
+            array_splice($arrayUserQuiDislike, array_search($this->getUser()->getId(), $arrayUserQuiDislike), 1);
+            $publication->setListeUserQuiDislike($arrayUserQuiDislike);
+        }
 
+        if(in_array($this->getUser()->getId(), $arrayUserQuiLike) == true){
+            $publication->setNbLike($publication->getNbLike() - 1);
+            array_splice($arrayUserQuiLike, array_search($this->getUser()->getId(), $arrayUserQuiLike), 1);
+            $publication->setListeUserQuiLike($arrayUserQuiLike);
         }
 
         $entityManager = $this->getDoctrine()->getManager();

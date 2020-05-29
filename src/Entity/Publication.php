@@ -96,6 +96,16 @@ class Publication implements \Serializable
      */
     private $tags;
 
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $listeUserQuiLike = [];
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $listeUserQuiDislike = [];
+
     public function __construct()
     {
         $this->signals = new ArrayCollection();
@@ -345,6 +355,30 @@ class Publication implements \Serializable
     public function setTags(?string $tags): self
     {
         $this->tags = $tags;
+
+        return $this;
+    }
+
+    public function getListeUserQuiLike(): ?array
+    {
+        return $this->listeUserQuiLike;
+    }
+
+    public function setListeUserQuiLike(?array $listeUserQuiLike): self
+    {
+        $this->listeUserQuiLike = $listeUserQuiLike;
+
+        return $this;
+    }
+
+    public function getListeUserQuiDislike(): ?array
+    {
+        return $this->listeUserQuiDislike;
+    }
+
+    public function setListeUserQuiDislike(?array $listeUserQuiDislike): self
+    {
+        $this->listeUserQuiDislike = $listeUserQuiDislike;
 
         return $this;
     }

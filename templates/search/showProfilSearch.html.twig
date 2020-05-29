@@ -76,12 +76,20 @@
                             {% set u = user %}
                         {% endfor %}
 
-                        {% for rep in publi.reponses %}
+                        {% if publi.reponses == null %}
                             <div>
-                                <b><a style="text-decoration: none" href="/users/{{ u.id }}">{{ u }}</a></b><br>
-                                <span style="margin-left: 2%"></span>{{ rep }}<br><br>
+                                <small>Aucun commentaire</small>
                             </div>
-                        {% endfor %}
+                        {% else %}
+
+                            {% for rep in publi.reponses %}
+                                <div>
+                                    <b><a style="text-decoration: none" href="/users/{{ u.id }}">{{ u }}</a></b><br>
+                                    <span style="margin-left: 2%"></span>{{ rep }}<br><br>
+                                </div>
+                            {% endfor %}
+
+                        {% endif %}
                     </div>
                     {% endif %}
                 </div>
