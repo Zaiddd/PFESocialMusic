@@ -109,6 +109,8 @@ class GoogleAuthenticator extends SocialAuthenticator
                 $user->setMail($email);
                 $user->setPseudo($googleUser->getName());
                 $user->setEstBanni(0);
+                $user->setCouleurFond('#4ecdc4');
+                $user->setCouleurMenu('#7bdff2');
             }
         }
 

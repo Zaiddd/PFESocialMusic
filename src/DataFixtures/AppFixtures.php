@@ -20,6 +20,8 @@ class AppFixtures extends Fixture
             ->setEmail("admin@gmail.com")
             ->setEmailCanonical("admin@gmail.com")
             ->setEnabled(1)
+            ->setCouleurFond('#4ecdc4')
+            ->setCouleurMenu('#7bdff2')
             ->setPassword("admin")
             ->setRoles((array)"ROLE_SUPER_ADMIN")
             ->setNom("Nom-Admin")

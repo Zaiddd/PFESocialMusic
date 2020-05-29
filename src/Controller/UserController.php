@@ -131,6 +131,8 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid() && $passwordsmatch && $majeur && !$exists)
         {
+            $user->setCouleurFond('#4ecdc4');
+            $user->setCouleurMenu('#7bdff2');
             $user->setEstBanni(0);
             $user->setEmail($form->get('mail')->getData());
             $user->setUsername($form->get('pseudo')->getData());

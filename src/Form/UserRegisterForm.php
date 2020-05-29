@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -24,6 +25,10 @@ class UserRegisterForm extends AbstractType
             ->add('nom')
             ->add('prenom')
             ->add('pseudo')
+            ->add('couleurFond', TextType::class,[
+                'required' => false])
+            ->add('couleurMenu', TextType::class, [
+                'required' => false])
             ->add('dateNaissance', DateType::class, [
                 'widget' => 'single_text',
                 'html5' => true

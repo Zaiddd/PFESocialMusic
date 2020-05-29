@@ -114,6 +114,16 @@ class User extends BaseUser implements UserInterface, \Serializable, EquatableIn
      */
     private $userSuivis = [];
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $couleurFond;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $couleurMenu;
+
     public function __construct()
     {
         parent::__construct();
@@ -459,6 +469,30 @@ class User extends BaseUser implements UserInterface, \Serializable, EquatableIn
     public function setUserSuivis(?array $userSuivis): self
     {
         $this->userSuivis = $userSuivis;
+
+        return $this;
+    }
+
+    public function getCouleurFond(): ?string
+    {
+        return $this->couleurFond;
+    }
+
+    public function setCouleurFond(?string $couleurFond): self
+    {
+        $this->couleurFond = $couleurFond;
+
+        return $this;
+    }
+
+    public function getCouleurMenu(): ?string
+    {
+        return $this->couleurMenu;
+    }
+
+    public function setCouleurMenu(?string $couleurMenu): self
+    {
+        $this->couleurMenu = $couleurMenu;
 
         return $this;
     }
