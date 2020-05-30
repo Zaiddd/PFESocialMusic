@@ -449,14 +449,16 @@ class UserController extends AbstractController
             $newPubli->setUserQuiCommente($publi->getUserQuiCommente());
             $newPubli->setReponses($publi->getReponses());
             $newPubli->setPartage(1);
-            $newPubli->setNbLike(0);
-            $newPubli->setNbDislike(0);
+            $newPubli->setNbLike($publi->getNbLike());
+            $newPubli->setNbDislike($publi->getNbDislike());
             $newPubli->setUserOriginal($publi->getUser()->getPseudo());
             $newPubli->setIdUserOriginal($publi->getUser()->getId());
             $newPubli->setPubliSuivie(1);
             $newPubli->setUserAyantSuivi($this->getUser()->getId());
             $newPubli->setSpotify($publi->getSpotify());
             $newPubli->setDeezer($publi->getDeezer());
+            $newPubli->setListeUserQuiLike($publi->getListeUserQuiLike());
+            $newPubli->setListeUserQuiDislike($publi->getListeUserQuiDislike());
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($newPubli);

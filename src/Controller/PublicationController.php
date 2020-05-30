@@ -183,13 +183,15 @@ class PublicationController extends AbstractController
         $publication->setUserQuiCommente($idPubli->getUserQuiCommente());
         $publication->setReponses($idPubli->getReponses());
         $publication->setPartage(1);
-        $publication->setNbLike(0);
-        $publication->setNbDislike(0);
+        $publication->setNbLike($idPubli->getNbLike());
+        $publication->setNbDislike($idPubli->getNbDislike());
         $publication->setUserOriginal($idPubli->getUser()->getPseudo());
         $publication->setIdUserOriginal($idPubli->getUser()->getId());
         $publication->setPubliSuivie(0);
         $publication->setSpotify($idPubli->getSpotify());
         $publication->setDeezer($idPubli->getDeezer());
+        $publication->setListeUserQuiLike($idPubli->getListeUserQuiLike());
+        $publication->setListeUserQuiDislike($idPubli->getListeUserQuiDislike());
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($publication);
@@ -213,11 +215,15 @@ class PublicationController extends AbstractController
         $publication->setUserQuiCommente($idPubli->getUserQuiCommente());
         $publication->setReponses($idPubli->getReponses());
         $publication->setPartage(1);
-        $publication->setNbLike(0);
-        $publication->setNbDislike(0);
+        $publication->setNbLike($idPubli->getNbLike());
+        $publication->setNbDislike($idPubli->getNbDislike());
         $publication->setUserOriginal($idPubli->getUser()->getPseudo());
         $publication->setIdUserOriginal($idPubli->getUser()->getId());
         $publication->setPubliSuivie(0);
+        $publication->setSpotify($idPubli->getSpotify());
+        $publication->setDeezer($idPubli->getDeezer());
+        $publication->setListeUserQuiLike($idPubli->getListeUserQuiLike());
+        $publication->setListeUserQuiDislike($idPubli->getListeUserQuiDislike());
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($publication);
@@ -260,6 +266,7 @@ class PublicationController extends AbstractController
     public function likePubli(ManagerRegistry $doctrine, $id)
     {
         $publication = $doctrine->getRepository(Publication::class)->findOneBy(['id' => [$id]]);
+        $allPubli = $doctrine->getRepository(Publication::class)->findAll();
 
         $arrayUserQuiLike = $publication->getListeUserQuiLike();
         $arrayUserQuiDislike = $publication->getListeUserQuiDislike();
@@ -281,6 +288,29 @@ class PublicationController extends AbstractController
             $publication->setListeUserQuiDislike($arrayUserQuiDislike);
         }
 
+        foreach($allPubli as $pub){
+            if ($pub->getIdUserOriginal() == $publication->getUser()->getId()){
+                $arrayUserQuiLike2 = $pub->getListeUserQuiLike();
+                $arrayUserQuiDislike2 = $pub->getListeUserQuiDislike();
+                if(in_array($this->getUser()->getId(), $arrayUserQuiLike2) == false) {
+                    $pub->setNbLike($pub->getNbLike() + 1);
+                    array_push($arrayUserQuiLike2, $this->getUser()->getId());
+                    $pub->setListeUserQuiLike($arrayUserQuiLike2);
+                }
+                else{
+                    $pub->setNbLike($pub->getNbLike() - 1);
+                    array_splice($arrayUserQuiLike2, array_search($this->getUser()->getId(), $arrayUserQuiLike2), 1);
+                    $pub->setListeUserQuiLike($arrayUserQuiLike2);
+                }
+
+                if(in_array($this->getUser()->getId(), $arrayUserQuiDislike2) == true){
+                    $pub->setNbDislike($pub->getNbDislike() - 1);
+                    array_splice($arrayUserQuiDislike2, array_search($this->getUser()->getId(), $arrayUserQuiDislike2), 1);
+                    $pub->setListeUserQuiDislike($arrayUserQuiDislike2);
+                }
+            }
+        }
+
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($publication);
         $entityManager->flush();
@@ -294,6 +324,7 @@ class PublicationController extends AbstractController
     public function likePubliFromSeach(ManagerRegistry $doctrine, $id)
     {
         $publication = $doctrine->getRepository(Publication::class)->findOneBy(['id' => [$id]]);
+        $allPubli = $doctrine->getRepository(Publication::class)->findAll();
 
         $arrayUserQuiLike = $publication->getListeUserQuiLike();
         $arrayUserQuiDislike = $publication->getListeUserQuiDislike();
@@ -328,6 +359,7 @@ class PublicationController extends AbstractController
     public function dislikePubli(ManagerRegistry $doctrine, $id)
     {
         $publication = $doctrine->getRepository(Publication::class)->findOneBy(['id' => [$id]]);
+        $allPubli = $doctrine->getRepository(Publication::class)->findAll();
 
         $arrayUserQuiLike = $publication->getListeUserQuiLike();
         $arrayUserQuiDislike = $publication->getListeUserQuiDislike();
@@ -362,6 +394,7 @@ class PublicationController extends AbstractController
     public function dislikePubliFromSearch(ManagerRegistry $doctrine, $id)
     {
         $publication = $doctrine->getRepository(Publication::class)->findOneBy(['id' => [$id]]);
+        $allPubli = $doctrine->getRepository(Publication::class)->findAll();
 
         $arrayUserQuiLike = $publication->getListeUserQuiLike();
         $arrayUserQuiDislike = $publication->getListeUserQuiDislike();

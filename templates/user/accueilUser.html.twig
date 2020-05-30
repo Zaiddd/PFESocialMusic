@@ -56,7 +56,7 @@
                 {% if app.user == publi.user %}
                     {% if publi.publiSuivie == 0 %}
                 <h4 style="float:right; ">
-                    <a href="{{ publi.id }}/deletePubli" onclick="return confirm('Êtes-vous sûrs de vouloir supprimer cette publication ?')" style="text-decoration: none; color: red">X</a>
+                    <a href="{{ publi.id }}/deletePubli" onclick="return confirm('Êtes-vous sûrs de vouloir supprimer{% if publi.partage == 0 %} cette publication {% else %} ce partage de publication {% endif %} ?')" style="text-decoration: none; color: red">X</a>
                 </h4>
                         {% endif %}
                 {% endif %}
@@ -67,7 +67,7 @@
                 <div style="text-align: center">
                     <img style="max-width: 750px; max-height: 700px; border-radius: 8px;" alt="" src="../../../../../uploads/{{ publi.getChampPhoto()}}">
                 </div>
-
+                <br>
                 {% if publi.spotify != null %}
                     <div style="text-align: center">
                         <iframe src="https://open.spotify.com/embed{{ publi.spotify }}" width="250" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
@@ -83,6 +83,7 @@
 
                 <a href="/{{ publi.id }}/liker" id="like" style="text-decoration: none; color: green; {% if app.user.id in publi.listeUserQuiLike %}text-shadow: 0 0 3px green;{% endif %}"><i class="icon-thumbs-up-alt icon-2x"></i></a>
                 <label class="lLike" >{{publi.nbLike}}</label>
+
 
                 <a href="/{{ publi.id }}/disliker" id="dislike" style="margin-left: 3%; text-decoration: none; color: red;{% if app.user.id in publi.listeUserQuiDislike %}text-shadow: 0 0 3px red;{% endif %}"><i class="icon-thumbs-down-alt icon-2x"></i></a>
                 <label class="lDislike">{{ publi.nbDislike }}</label>

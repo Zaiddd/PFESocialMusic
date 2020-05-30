@@ -8,7 +8,7 @@
     {% if app.user == publication.user or app.user.pseudo == "admin" %}
         {% if publication.publiSuivie == 0 %}
             <h4 style="float:right; ">
-                <a href="/{{ publication.id }}/deletePubli" onclick="return confirm('Êtes-vous sûrs de vouloir supprimer cette publication ?')" style="text-decoration: none; color: red">X</a>
+                <a href="/{{ publication.id }}/deletePubli" onclick="return confirm('Êtes-vous sûrs de vouloir supprimer{% if publication.partage == 0 %} cette publication {% else %} ce partage de publication {% endif %} ?')" style="text-decoration: none; color: red">X</a>
             </h4>
         {% endif %}
     {% endif %}

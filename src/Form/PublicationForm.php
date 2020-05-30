@@ -34,7 +34,10 @@ class PublicationForm extends AbstractType
             ->add('tags', TextType::class,
                 [ 'required' => false])
             ->add('spotify', TextType::class,
-                [ 'required' => false])
+                [ 'required' => false,
+                    'attr' => array(
+                        'placeholder' => 'https://open.spotify.com/embed',
+                    )])
             //->add('deezer', TextType::class,
              //   [ 'required' => false])
         ;

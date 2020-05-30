@@ -30,9 +30,9 @@
                         <a class="dropdown-item" href="{{ path('') }}"> Accéder à mon espace </a>
                     {% elseif is_granted('ROLE_USER') %}
                         {% if app.user.pseudo == "admin" %}
-                            <a class="dropdown-item disabled" href="{{ app.user.id }}/profil"> Mon profil </a>
+                            <a class="dropdown-item disabled" href="/{{ app.user.id }}/profil"> Mon profil </a>
                         {% else %}
-                            <a class="dropdown-item" href="{{ app.user.id }}/profil"> Mon profil </a>
+                            <a class="dropdown-item" href="/{{ app.user.id }}/profil"> Mon profil </a>
                         {% endif %}
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ path('User.InfosPerso.show') }}"> Informations personnelles </a>
