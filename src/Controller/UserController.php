@@ -503,4 +503,11 @@ class UserController extends AbstractController
         return $this->redirectToRoute('User.accueil');
     }
 
+    /**
+     * @Route("/FAQ", name="FAQ.Afficher")
+     */
+    public function faq(UserRepository $userRepository, EntityManagerInterface $doctrine): Response
+    {
+        return $this->render('faq/showFaq.html.twig');
+    }
 }
