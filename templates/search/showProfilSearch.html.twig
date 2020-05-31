@@ -50,12 +50,12 @@
                     </a>
                     {% if app.user == publi.user %}
                         <h4 style="float:right; ">
-                            <a href="{{ publi.id }}/deletePubli" onclick="return confirm('Êtes-vous sûrs de vouloir supprimer{% if publi.partage == 0 %} cette publication {% else %} ce partage de publication {% endif %} ?')" style="text-decoration: none; color: red">X</a>
+                            <a href="/{{ publi.id }}/deletePubli" onclick="return confirm('Êtes-vous sûrs de vouloir supprimer{% if publi.partage == 0 %} cette publication {% else %} ce partage de publication {% endif %} ?')" style="text-decoration: none; color: red">X</a>
                         </h4>
                     {% endif %}
                     <hr>
 
-                    <span style="margin-left: 5%"></span>{{ publi.commentaire }}
+                    <span style="margin-left: 5%; max-width: 750px;"></span><p style="width: 750px;word-wrap: break-word; padding-left: 8%">{{ publi.commentaire }}</p>
                     <div style="text-align: center">
                         <img style="max-width: 750px; max-height: 700px; border-radius: 8px;" alt="" src="../../../../../uploads/{{ publi.getChampPhoto()}}">
                     </div>
