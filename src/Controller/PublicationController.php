@@ -346,6 +346,29 @@ class PublicationController extends AbstractController
             $publication->setListeUserQuiDislike($arrayUserQuiDislike);
         }
 
+        foreach($allPubli as $pub){
+            if ($pub->getIdUserOriginal() == $publication->getUser()->getId()){
+                $arrayUserQuiLike2 = $pub->getListeUserQuiLike();
+                $arrayUserQuiDislike2 = $pub->getListeUserQuiDislike();
+                if(in_array($this->getUser()->getId(), $arrayUserQuiLike2) == false) {
+                    $pub->setNbLike($pub->getNbLike() + 1);
+                    array_push($arrayUserQuiLike2, $this->getUser()->getId());
+                    $pub->setListeUserQuiLike($arrayUserQuiLike2);
+                }
+                else{
+                    $pub->setNbLike($pub->getNbLike() - 1);
+                    array_splice($arrayUserQuiLike2, array_search($this->getUser()->getId(), $arrayUserQuiLike2), 1);
+                    $pub->setListeUserQuiLike($arrayUserQuiLike2);
+                }
+
+                if(in_array($this->getUser()->getId(), $arrayUserQuiDislike2) == true){
+                    $pub->setNbDislike($pub->getNbDislike() - 1);
+                    array_splice($arrayUserQuiDislike2, array_search($this->getUser()->getId(), $arrayUserQuiDislike2), 1);
+                    $pub->setListeUserQuiDislike($arrayUserQuiDislike2);
+                }
+            }
+        }
+
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($publication);
         $entityManager->flush();
@@ -381,6 +404,29 @@ class PublicationController extends AbstractController
             $publication->setListeUserQuiLike($arrayUserQuiLike);
         }
 
+        foreach($allPubli as $pub){
+            if ($pub->getIdUserOriginal() == $publication->getUser()->getId()){
+                $arrayUserQuiLike2 = $pub->getListeUserQuiLike();
+                $arrayUserQuiDislike2 = $pub->getListeUserQuiDislike();
+                if(in_array($this->getUser()->getId(), $arrayUserQuiDislike2) == false) {
+                    $pub->setNbDislike($pub->getNbDislike() + 1);
+                    array_push($arrayUserQuiDislike2, $this->getUser()->getId());
+                    $pub->setListeUserQuiDislike($arrayUserQuiDislike2);
+                }
+                else{
+                    $pub->setNbDislike($pub->getNbDislike() - 1);
+                    array_splice($arrayUserQuiDislike2, array_search($this->getUser()->getId(), $arrayUserQuiDislike2), 1);
+                    $pub->setListeUserQuiDislike($arrayUserQuiDislike2);
+                }
+
+                if(in_array($this->getUser()->getId(), $arrayUserQuiLike2) == true){
+                    $pub->setNbLike($pub->getNbLike() - 1);
+                    array_splice($arrayUserQuiLike2, array_search($this->getUser()->getId(), $arrayUserQuiLike2), 1);
+                    $pub->setListeUserQuiLike($arrayUserQuiLike2);
+                }
+            }
+        }
+
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($publication);
         $entityManager->flush();
@@ -414,6 +460,29 @@ class PublicationController extends AbstractController
             $publication->setNbLike($publication->getNbLike() - 1);
             array_splice($arrayUserQuiLike, array_search($this->getUser()->getId(), $arrayUserQuiLike), 1);
             $publication->setListeUserQuiLike($arrayUserQuiLike);
+        }
+
+        foreach($allPubli as $pub){
+            if ($pub->getIdUserOriginal() == $publication->getUser()->getId()){
+                $arrayUserQuiLike2 = $pub->getListeUserQuiLike();
+                $arrayUserQuiDislike2 = $pub->getListeUserQuiDislike();
+                if(in_array($this->getUser()->getId(), $arrayUserQuiDislike2) == false) {
+                    $pub->setNbDislike($pub->getNbDislike() + 1);
+                    array_push($arrayUserQuiDislike2, $this->getUser()->getId());
+                    $pub->setListeUserQuiDislike($arrayUserQuiDislike2);
+                }
+                else{
+                    $pub->setNbDislike($pub->getNbDislike() - 1);
+                    array_splice($arrayUserQuiDislike2, array_search($this->getUser()->getId(), $arrayUserQuiDislike2), 1);
+                    $pub->setListeUserQuiDislike($arrayUserQuiDislike2);
+                }
+
+                if(in_array($this->getUser()->getId(), $arrayUserQuiLike2) == true){
+                    $pub->setNbLike($pub->getNbLike() - 1);
+                    array_splice($arrayUserQuiLike2, array_search($this->getUser()->getId(), $arrayUserQuiLike2), 1);
+                    $pub->setListeUserQuiLike($arrayUserQuiLike2);
+                }
+            }
         }
 
         $entityManager = $this->getDoctrine()->getManager();
