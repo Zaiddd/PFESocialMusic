@@ -9,7 +9,7 @@
     <h4> Quoi de neuf ? </h4><br>
     {{ form_start(form) }}
     {{ form_row(form._token) }}
-    {{ form_row(form.commentaire, {'label': 'Exprimez-vous '}) }}
+    {{ form_row(form.commentaire, {'label': 'Exprimez-vous (240 caractères)'}) }}
     {{ form_row(form.champPhoto, {'label': 'Choisir une photo ? ' | default }) }}
     {{ form_row(form.tags, {'label': 'Tags' }) }}
     {{ form_row(form.spotify, {'label': 'Ajouter une musique via Spotify' }) }}

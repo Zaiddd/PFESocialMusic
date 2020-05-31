@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -27,8 +28,9 @@ class PublicationForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('commentaire', null, array(
-                'attr' => array('style' => 'height: 200px')))
+            ->add('commentaire', TextareaType::class, array(
+                'attr' => array('style' => 'height: 120px',
+                    'maxlength' => '240')))
             ->add('champPhoto', FileType::class,
                 [ 'required' => false])
             ->add('tags', TextType::class,
