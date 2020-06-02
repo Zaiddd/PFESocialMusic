@@ -41,12 +41,14 @@
                     -
                     <a href="/users/{{ publi.user.id }}/{% if publi.publiSuivie == 0 %}suivre{% else %}desabonner{% endif %}">{% if publi.publiSuivie == 0 %}Suivre{% else %}Se désabonner{% endif %}</a>
 
+                    {% if app.user.pseudo != "admin" %}
                     <a style="margin-left: 3%; float: right; text-decoration: none" href="/{{ publi.id }}/signaler">
                         <span class="icon-stack">
                           <i class="icon-circle icon-stack-base"></i>
                           <i class="icon-flag icon-light"></i>
                         </span>
                     </a>
+                    {% endif %}
                     {% if app.user == publi.user %}
                         <h4 style="float:right; ">
                             <a href="/{{ publi.id }}/deletePubli" onclick="return confirm('Êtes-vous sûrs de vouloir supprimer{% if publi.partage == 0 %} cette publication {% else %} ce partage de publication {% endif %} ?')" style="text-decoration: none; color: red">X</a>
@@ -72,14 +74,18 @@
 
                     <small><i>Tags : {% if publi.tags == null %} Aucun tag {% else %} {{ publi.tags }} {% endif %} </i></small>
                     <hr>
-                    <a href="/{{ publi.id }}/liker" id="like" style="text-decoration: none; color: green; {% if app.user.id in publi.listeUserQuiLike %}text-shadow: 0 0 3px green;{% endif %}"><i class="icon-thumbs-up-alt icon-2x"></i></a>
+                    {% if app.user.pseudo != "admin" %}<a href="/users/{{ publi.id }}/liker" id="like" style="text-decoration: none; color: green; {% if app.user.id in publication.listeUserQuiLike %}text-shadow: 0 0 3px green;{% endif %}"><i class="icon-thumbs-up-alt icon-2x"></i></a>
+                    {% else %}<i class="icon-thumbs-up-alt icon-2x" style="color: green"></i>{% endif %}
                     <label class="lLike" >{{publi.nbLike}}</label>
 
-                    <a href="/{{ publi.id }}/disliker" id="dislike" style="margin-left: 3%; text-decoration: none; color: red;{% if app.user.id in publi.listeUserQuiDislike %}text-shadow: 0 0 3px red;{% endif %}"><i class="icon-thumbs-down-alt icon-2x"></i></a>
+                    {% if app.user.pseudo != "admin" %}<a href="/users/{{ publi.id }}/disliker" id="dislike" style="margin-left: 3%; text-decoration: none; color: red;{% if app.user.id in publication.listeUserQuiDislike %}text-shadow: 0 0 3px red;{% endif %}"><i class="icon-thumbs-down-alt icon-2x"></i></a>
+                    {% else %}<i class="icon-thumbs-down-alt icon-2x" style="color: red; margin-left: 2%"></i>{% endif %}
                     <label class="lDislike">{{ publi.nbDislike }}</label>
 
+                    {% if app.user.pseudo != "admin" %}
                     <a style="margin-left: 3%; text-decoration: none; color: darkcyan" href="/users/{{ publi.id }}/commenter"><i class="icon-comments-alt icon-2x"></i></a>
                     <a style="float:right; text-decoration: none" href="/{{ publi.id }}/partager" id="partager"><i class="icon-share icon-2x"></i></a>
+                        {% endif %}
                     <hr>
                     {% if publi.partage == 0 %}
                     <b><label>Commentaires</label></b><br><br>
@@ -105,12 +111,15 @@
                                             <a href="/{{ publi.id }}/{{ rep }}/deleteCommentaire" onclick="return confirm('Êtes-vous sûrs de vouloir supprimer ce commentaire ?')" style="text-decoration: none; color: red">X</a>
                                         </h4>
                                     {% endif %}
+                                    {% if app.user.pseudo != "admin" %}
                                     <a style="margin-left: 3%; float: right; text-decoration: none" href="/{{ publi.id }}/signaler">
                                         <span class="icon-stack">
                                           <i class="icon-circle icon-stack-base"></i>
                                           <i class="icon-flag icon-light"></i>
                                         </span>
-                                    </a><br>
+                                    </a>
+                                    {% endif %}
+                                    <br>
                                     <span style="margin-left: 2%"></span>{{ rep }}<br><br>
                                 </div>
                             {% endfor %}

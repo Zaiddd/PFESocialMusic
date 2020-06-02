@@ -4,7 +4,6 @@
     <br>
 <div class="p-3 shadow p-3 mb-5 bg-white" style="width: 75%; margin: 0 auto; height: fit-content; border-radius: 10px" >
     <h5 style="display: inline"><a style="color: black" href="users/{% if publication.partage ==1 %}{{ publication.idUserOriginal }}{% else %}{{ publication.user.id }}{% endif %}">{% if publication.partage ==1 %}{{ publication.userOriginal }}{% else %}{{ publication.user.pseudo }}{% endif %}</a></h5>
-    id useroriginal : {{ publication.idUserOriginal }}
     {% if app.user == publication.user or app.user.pseudo == "admin" %}
         {% if publication.publiSuivie == 0 %}
             <h4 style="float:right; ">
@@ -78,12 +77,14 @@
                             <a href="/{{ publication.id }}/{{ rep }}/deleteCommentaire" onclick="return confirm('Êtes-vous sûrs de vouloir supprimer ce commentaire ?')" style="text-decoration: none; color: red">X</a>
                         </h4>
                     {% endif %}
+                    {% if app.user.pseudo != "admin" %}
                     <a style="margin-left: 3%; float: right; text-decoration: none" href="/{{ publication.id }}/signaler">
-                                        <span class="icon-stack">
-                                          <i class="icon-circle icon-stack-base"></i>
-                                          <i class="icon-flag icon-light"></i>
-                                        </span>
+                        <span class="icon-stack">
+                            <i class="icon-circle icon-stack-base"></i>
+                            <i class="icon-flag icon-light"></i>
+                        </span>
                     </a>
+                    {% endif %}
                     <br>
                     <span style="margin-left: 2%"></span>{{ rep }}<br><br>
                 </div>
