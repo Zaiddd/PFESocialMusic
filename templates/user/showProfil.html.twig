@@ -96,12 +96,25 @@
                         </div>
                     {% else %}
 
+                        <div style="overflow: auto; height: 300px">
                         {% for rep in publi.reponses %}
                             <div>
-                                <b><a style="text-decoration: none" href="/users/{{ u.id }}">{{ u }}</a></b><br>
+                                <b><a style="text-decoration: none" href="/users/{{ u.id }}">{{ u }}</a></b>
+                                {% if app.user.id == publi.user.id %}
+                                    <h4 style="float:right; ">
+                                        <a href="/{{ publi.id }}/{{ rep }}/deleteCommentaire" onclick="return confirm('Êtes-vous sûrs de vouloir supprimer ce commentaire ?')" style="text-decoration: none; color: red">X</a>
+                                    </h4>
+                                {% endif %}
+                                <a style="margin-left: 3%; float: right; text-decoration: none" href="/{{ publi.id }}/signaler">
+                                        <span class="icon-stack">
+                                          <i class="icon-circle icon-stack-base"></i>
+                                          <i class="icon-flag icon-light"></i>
+                                        </span>
+                                </a><br>
                                 <span style="margin-left: 2%"></span>{{ rep }}<br><br>
                             </div>
                         {% endfor %}
+                        </div>
 
                     {% endif %}
                 </div>

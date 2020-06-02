@@ -459,6 +459,7 @@ class UserController extends AbstractController
             $newPubli->setDeezer($publi->getDeezer());
             $newPubli->setListeUserQuiLike($publi->getListeUserQuiLike());
             $newPubli->setListeUserQuiDislike($publi->getListeUserQuiDislike());
+            $newPubli->setIdPubliOriginale($publi->getId());
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($newPubli);

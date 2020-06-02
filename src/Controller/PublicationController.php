@@ -190,6 +190,7 @@ class PublicationController extends AbstractController
         $publication->setDeezer($idPubli->getDeezer());
         $publication->setListeUserQuiLike($idPubli->getListeUserQuiLike());
         $publication->setListeUserQuiDislike($idPubli->getListeUserQuiDislike());
+        $publication->setIdPubliOriginale($idPubli->getId());
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($publication);

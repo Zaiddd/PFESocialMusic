@@ -116,6 +116,11 @@ class Publication implements \Serializable
      */
     private $deezer;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $idPubliOriginale;
+
     public function __construct()
     {
         $this->signals = new ArrayCollection();
@@ -413,6 +418,18 @@ class Publication implements \Serializable
     public function setDeezer(?string $deezer): self
     {
         $this->deezer = $deezer;
+
+        return $this;
+    }
+
+    public function getIdPubliOriginale(): ?int
+    {
+        return $this->idPubliOriginale;
+    }
+
+    public function setIdPubliOriginale(?int $idPubliOriginale): self
+    {
+        $this->idPubliOriginale = $idPubliOriginale;
 
         return $this;
     }
