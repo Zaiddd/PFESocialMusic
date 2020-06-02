@@ -55,6 +55,8 @@ class PublicationController extends AbstractController
         $publication = new Publication();
         //$publication->setChampPhoto('');
         $publication->setUser($id);
+        $publication->setIdUserOriginal($id->getId());
+        $publication->setUserOriginal($id->getPseudo());
         $publication->setDate(new \DateTime());
         $publication->setPartage(0);
         $form = $this->createForm(PublicationForm::class, $publication);
@@ -122,7 +124,7 @@ class PublicationController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
 
         foreach($allPubli as $publiSite){
-            if($publiSite->getIdUserOriginal() == $this->getUser()->getId()){
+            if($publiSite->getIdUserOriginal() == $this->getUser()->getId() and ($publiSite->getPartage() == 1 or $publiSite->getPubliSuivie() == 1)){
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->remove($publiSite);
                 $entityManager->flush();
@@ -148,7 +150,7 @@ class PublicationController extends AbstractController
         $allPubli = $doctrine->getRepository(Publication::class)->findAll();
 
         foreach($allPubli as $publiSite){
-            if($publiSite->getIdUserOriginal() == $this->getUser()->getId()){
+            if($publiSite->getIdUserOriginal() == $this->getUser()->getId() and ($publiSite->getPartage() == 1 or $publiSite->getPubliSuivie() == 1)){
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->remove($publiSite);
                 $entityManager->flush();
@@ -267,25 +269,10 @@ class PublicationController extends AbstractController
         $arrayUserQuiLike = $publication->getListeUserQuiLike();
         $arrayUserQuiDislike = $publication->getListeUserQuiDislike();
 
-        if(in_array($this->getUser()->getId(), $arrayUserQuiLike) == false) {
-            $publication->setNbLike($publication->getNbLike() + 1);
-            array_push($arrayUserQuiLike, $this->getUser()->getId());
-            $publication->setListeUserQuiLike($arrayUserQuiLike);
-        }
-        else{
-            $publication->setNbLike($publication->getNbLike() - 1);
-            array_splice($arrayUserQuiLike, array_search($this->getUser()->getId(), $arrayUserQuiLike), 1);
-            $publication->setListeUserQuiLike($arrayUserQuiLike);
-        }
 
-        if(in_array($this->getUser()->getId(), $arrayUserQuiDislike) == true){
-            $publication->setNbDislike($publication->getNbDislike() - 1);
-            array_splice($arrayUserQuiDislike, array_search($this->getUser()->getId(), $arrayUserQuiDislike), 1);
-            $publication->setListeUserQuiDislike($arrayUserQuiDislike);
-        }
 
         foreach($allPubli as $pub){
-            if ($pub->getIdUserOriginal() == $publication->getUser()->getId()){
+            if ($pub->getIdUserOriginal() == $publication->getIdUserOriginal()){
                 $arrayUserQuiLike2 = $pub->getListeUserQuiLike();
                 $arrayUserQuiDislike2 = $pub->getListeUserQuiDislike();
                 if(in_array($this->getUser()->getId(), $arrayUserQuiLike2) == false) {
@@ -325,25 +312,8 @@ class PublicationController extends AbstractController
         $arrayUserQuiLike = $publication->getListeUserQuiLike();
         $arrayUserQuiDislike = $publication->getListeUserQuiDislike();
 
-        if(in_array($this->getUser()->getId(), $arrayUserQuiLike) == false) {
-            $publication->setNbLike($publication->getNbLike() + 1);
-            array_push($arrayUserQuiLike, $this->getUser()->getId());
-            $publication->setListeUserQuiLike($arrayUserQuiLike);
-        }
-        else{
-            $publication->setNbLike($publication->getNbLike() - 1);
-            array_splice($arrayUserQuiLike, array_search($this->getUser()->getId(), $arrayUserQuiLike), 1);
-            $publication->setListeUserQuiLike($arrayUserQuiLike);
-        }
-
-        if(in_array($this->getUser()->getId(), $arrayUserQuiDislike) == true){
-            $publication->setNbDislike($publication->getNbDislike() - 1);
-            array_splice($arrayUserQuiDislike, array_search($this->getUser()->getId(), $arrayUserQuiDislike), 1);
-            $publication->setListeUserQuiDislike($arrayUserQuiDislike);
-        }
-
         foreach($allPubli as $pub){
-            if ($pub->getIdUserOriginal() == $publication->getUser()->getId()){
+            if ($pub->getIdUserOriginal() == $publication->getIdUserOriginal()){
                 $arrayUserQuiLike2 = $pub->getListeUserQuiLike();
                 $arrayUserQuiDislike2 = $pub->getListeUserQuiDislike();
                 if(in_array($this->getUser()->getId(), $arrayUserQuiLike2) == false) {
@@ -382,23 +352,6 @@ class PublicationController extends AbstractController
 
         $arrayUserQuiLike = $publication->getListeUserQuiLike();
         $arrayUserQuiDislike = $publication->getListeUserQuiDislike();
-
-        if(in_array($this->getUser()->getId(), $arrayUserQuiDislike) == false) {
-            $publication->setNbDislike($publication->getNbDislike() + 1);
-            array_push($arrayUserQuiDislike, $this->getUser()->getId());
-            $publication->setListeUserQuiDislike($arrayUserQuiDislike);
-        }
-        else{
-            $publication->setNbDislike($publication->getNbDislike() - 1);
-            array_splice($arrayUserQuiDislike, array_search($this->getUser()->getId(), $arrayUserQuiDislike), 1);
-            $publication->setListeUserQuiDislike($arrayUserQuiDislike);
-        }
-
-        if(in_array($this->getUser()->getId(), $arrayUserQuiLike) == true){
-            $publication->setNbLike($publication->getNbLike() - 1);
-            array_splice($arrayUserQuiLike, array_search($this->getUser()->getId(), $arrayUserQuiLike), 1);
-            $publication->setListeUserQuiLike($arrayUserQuiLike);
-        }
 
         foreach($allPubli as $pub){
             if ($pub->getIdUserOriginal() == $publication->getUser()->getId()){
@@ -440,23 +393,6 @@ class PublicationController extends AbstractController
 
         $arrayUserQuiLike = $publication->getListeUserQuiLike();
         $arrayUserQuiDislike = $publication->getListeUserQuiDislike();
-
-        if(in_array($this->getUser()->getId(), $arrayUserQuiDislike) == false) {
-            $publication->setNbDislike($publication->getNbDislike() + 1);
-            array_push($arrayUserQuiDislike, $this->getUser()->getId());
-            $publication->setListeUserQuiDislike($arrayUserQuiDislike);
-        }
-        else{
-            $publication->setNbDislike($publication->getNbDislike() - 1);
-            array_splice($arrayUserQuiDislike, array_search($this->getUser()->getId(), $arrayUserQuiDislike), 1);
-            $publication->setListeUserQuiDislike($arrayUserQuiDislike);
-        }
-
-        if(in_array($this->getUser()->getId(), $arrayUserQuiLike) == true){
-            $publication->setNbLike($publication->getNbLike() - 1);
-            array_splice($arrayUserQuiLike, array_search($this->getUser()->getId(), $arrayUserQuiLike), 1);
-            $publication->setListeUserQuiLike($arrayUserQuiLike);
-        }
 
         foreach($allPubli as $pub){
             if ($pub->getIdUserOriginal() == $publication->getUser()->getId()){
