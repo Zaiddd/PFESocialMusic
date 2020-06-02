@@ -3,7 +3,7 @@
 {% block body %}
     <br>
 <div class="p-3 shadow p-3 mb-5 bg-white" style="width: 75%; margin: 0 auto; height: fit-content; border-radius: 10px" >
-    <h5 style="display: inline"><a style="color: black" href="users/{{ user.id }}">{{ user.pseudo }}</a></h5>
+    <h5 style="display: inline"><a style="color: black" href="users/{% if publication.partage ==1 %}{{ publication.idUserOriginal }}{% else %}{{ publication.user.id }}{% endif %}">{% if publication.partage ==1 %}{{ publication.userOriginal }}{% else %}{{ publication.user.pseudo }}{% endif %}</a></h5>
 
     {% if app.user == publication.user or app.user.pseudo == "admin" %}
         {% if publication.publiSuivie == 0 %}
@@ -28,6 +28,7 @@
     <div style="text-align: center">
         <img style="max-width: 750px; max-height: 700px" alt="" src="../../../../../uploads/{{ publication.getChampPhoto()}}">
     </div>
+    <br>
 
     {% if publication.spotify != null %}
         <div style="text-align: center">
@@ -50,7 +51,6 @@
     {% else %}<i class="icon-thumbs-down-alt icon-2x" style="color: red; margin-left: 2%"></i>{% endif %}
     <label class="lDislike">{{ publication.nbDislike }}</label>
 
-    {% if publication.partage == 0 %}
         {% if app.user.pseudo != "admin" %}
             <a style="margin-left: 3%; text-decoration: none; color: darkcyan" href="/users/{{ publication.id }}/commenter"><i class="icon-comments-alt icon-2x"></i></a>
             <a style="float:right; text-decoration: none" href="/{{ publication.id }}/partager" id="partager"><i class="icon-share icon-2x"></i></a>
@@ -79,7 +79,7 @@
 
         {% endif %}
     </div>
-    {% endif %}
+
 </div>
 
 {% endblock %}

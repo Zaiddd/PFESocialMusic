@@ -101,6 +101,11 @@
                         {% set u = user %}
                     {% endfor %}
 
+                    {% set com = "" %}
+                    {% for comment in commentaires %}
+                        {% set com = comment %}
+                    {% endfor %}
+
                     {% if publi.reponses == null %}
                         <div>
                             <small>Aucun commentaire</small>
@@ -109,13 +114,24 @@
 
                         {% for rep in publi.reponses %}
                                 <div>
-                                    <b><a style="text-decoration: none" href="/users/{{ u.id }}">{{ u }}</a></b><br>
+                                    <b><a style="text-decoration: none" href="/users/{{ u.id }}">{{ u }}</a></b>
+                                    {% if app.user.id == publi.user.id %}
+                                        <h4 style="float:right; ">
+                                            <a href="/{{ publi.id }}/{{ rep }}/deleteCommentaire" onclick="return confirm('Êtes-vous sûrs de vouloir supprimer ce commentaire ?')" style="text-decoration: none; color: red">X</a>
+                                        </h4>
+                                    {% endif %}
+                                    <br>
                                     <span style="margin-left: 2%"></span>{{ rep }}<br><br>
                                 </div>
                         {% endfor %}
 
                     {% endif %}
                 </div>
+                {% else %}
+                    {% if app.user.pseudo != "admin" %}
+                        <a style="margin-left: 3%; text-decoration: none; color: darkcyan" href="/publication/{{ publi.id }}"><i class="icon-comments-alt icon-2x"></i></a>
+                        <hr>
+                    {% endif %}
                 {% endif %}
             </div>
             {% endif %}

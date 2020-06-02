@@ -65,13 +65,20 @@ class CommentPublicationController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/deleteCommentaire", name="Commentaire.delete")
+     * @Route("/{id2}/{id}/deleteCommentaire", name="Commentaire.delete")
      */
-    public function deleteCommentaire(ManagerRegistry $doctrine, Request $request)
+    public function deleteCommentaire(ManagerRegistry $doctrine, Request $request, $id, $id2)
     {
-        $idComment = $doctrine->getRepository(CommentPublication::class)->find((int)$request->attributes->get('id'));
+        $idPubli = $doctrine->getRepository(Publication::class)->findOneBy(['id' => [$id2]]);
+        $idComment = $doctrine->getRepository(CommentPublication::class)->findOneBy(['newComment' => [$id]]);
         $entityManager = $this->getDoctrine()->getManager();
+
+        $arrayCommentairesPubli = $idPubli->getReponses();
+        array_splice($arrayCommentairesPubli, array_search($idComment->getNewComment(),$arrayCommentairesPubli),1);
+        $idPubli->setReponses($arrayCommentairesPubli);
         $entityManager->remove($idComment);
+
+
         $entityManager->flush();
 
         return $this->redirectToRoute('User.accueil');

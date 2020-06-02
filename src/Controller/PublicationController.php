@@ -128,15 +128,11 @@ class PublicationController extends AbstractController
                 $entityManager->flush();
             }
         }
-
         if($signal != null)
             $entityManager->remove($signal);
         //$entityManager->remove($userPubli);
         $entityManager->remove($idPubli);
         $entityManager->flush();
-
-
-
         return $this->redirectToRoute('User.accueil');
     }
 
