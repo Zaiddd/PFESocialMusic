@@ -59,6 +59,7 @@ class PublicationController extends AbstractController
         $publication->setUserOriginal($id->getPseudo());
         $publication->setDate(new \DateTime());
         $publication->setPartage(0);
+        $publication->setPubliSupprimee(0);
         $form = $this->createForm(PublicationForm::class, $publication);
         $form->handleRequest($request);
 
@@ -126,14 +127,17 @@ class PublicationController extends AbstractController
         foreach($allPubli as $publiSite){
             if($publiSite->getIdUserOriginal() == $this->getUser()->getId() and ($publiSite->getPartage() == 1 or $publiSite->getPubliSuivie() == 1)){
                 $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->remove($publiSite);
-                $entityManager->flush();
+                /*$entityManager->remove($publiSite);
+                $entityManager->flush();*/
+                $publiSite->setPubliSupprimee(1);
             }
         }
-        if($signal != null)
-            $entityManager->remove($signal);
+        //if($signal != null)
+        //    $entityManager->remove($signal);
         //$entityManager->remove($userPubli);
-        $entityManager->remove($idPubli);
+        //$entityManager->remove($idPubli);
+        $idPubli->setPubliSupprimee(1);
+        $entityManager = $this->getDoctrine()->getManager();
         $entityManager->flush();
         return $this->redirectToRoute('User.accueil');
     }
@@ -152,15 +156,17 @@ class PublicationController extends AbstractController
         foreach($allPubli as $publiSite){
             if($publiSite->getIdUserOriginal() == $this->getUser()->getId() and ($publiSite->getPartage() == 1 or $publiSite->getPubliSuivie() == 1)){
                 $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->remove($publiSite);
-                $entityManager->flush();
+                /*$entityManager->remove($publiSite);
+                $entityManager->flush();*/
+                $publiSite->setPubliSupprimee(1);
             }
         }
 
-        if($signal != null)
-            $entityManager->remove($signal);
-        $entityManager->remove($userPubli);
-        $entityManager->remove($idPubli);
+        //if($signal != null)
+        //    $entityManager->remove($signal);
+        //$entityManager->remove($userPubli);
+        $idPubli->setPubliSupprimee(1);
+        $entityManager = $this->getDoctrine()->getManager();
         $entityManager->flush();
 
         return $this->redirectToRoute('User.accueil');
@@ -191,6 +197,7 @@ class PublicationController extends AbstractController
         $publication->setListeUserQuiLike($idPubli->getListeUserQuiLike());
         $publication->setListeUserQuiDislike($idPubli->getListeUserQuiDislike());
         $publication->setIdPubliOriginale($idPubli->getId());
+        $publication->setPubliSupprimee(0);
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($publication);
@@ -223,6 +230,7 @@ class PublicationController extends AbstractController
         $publication->setDeezer($idPubli->getDeezer());
         $publication->setListeUserQuiLike($idPubli->getListeUserQuiLike());
         $publication->setListeUserQuiDislike($idPubli->getListeUserQuiDislike());
+        $publication->setPubliSupprimee(0);
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($publication);

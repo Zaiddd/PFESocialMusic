@@ -18,12 +18,14 @@
             </thead>
             <tbody>
             {% for publi in publication %}
+                {% if publi.publiSupprimee == 0 %}
                 <tr>
                     <td colspan="2">{{ publi.user.pseudo }}</td>
                     <td colspan="2">{{publi.commentaire}}</td>
                     <td colspan="2">{{publi.date|date("d/m/Y")}}</td>
                     <td colspan="2"><button type="button" class="btn btn-primary"><a style="text-decoration: none; color: white" href="publication/{{ publi.id }}">Voir</a></button></td>
                 </tr>
+                {% endif %}
             {% endfor %}
             </tbody>
         </table>
@@ -59,12 +61,14 @@
 
 
             {% for rep in p.reponses %}
+                {% if p.publiSupprimee == 0 %}
                 <tr>
                     <td colspan="2">{{ u }}</td>
                     <td colspan="2">{{rep}}</td>
                     <td colspan="2">{#{ rep.date|date("d/m/Y") }#}</td>
                     <td colspan="2"><button type="button" class="btn btn-primary"><a style="text-decoration: none; color: white" href="publication/{{ p.id }}">Voir</a></button></td>
                 </tr>
+                {% endif %}
             {% endfor %}
 
 

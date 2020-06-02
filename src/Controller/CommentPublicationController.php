@@ -51,16 +51,7 @@ class CommentPublicationController extends AbstractController
             array_push($arrayUser, $userCommente);
             $idPubli->setUserQuiCommente($arrayUser);
             $idPubli->setReponses($arrayComment);
-            foreach($publication as $unePubli){
-                if($unePubli->getIdUserOriginal() == $idPubli->getIdUserOriginal()){
-                    $arrayComment2 = $unePubli->getReponses();
-                    $arrayUser2 = $unePubli->getUserQuiCommente();
-                    array_push($arrayComment2, $com);
-                    array_push($arrayUser2, $userCommente);
-                    $unePubli->setUserQuiCommente($arrayUser2);
-                    $unePubli->setReponses($arrayComment2);
-                }
-            }
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($newComment);
             $entityManager->flush();

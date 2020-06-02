@@ -30,6 +30,7 @@
 
 
         {% for publi in publication %}
+        {% if publi.publiSupprimee == 0 %}
 
             {% if app.user.id == publi.user.id or publi.userAyantSuivi == app.user.id %}
 
@@ -111,7 +112,7 @@
                         </div>
                     {% else %}
 
-                        <div style="overflow: auto; height: 300px">
+                        <div style="overflow: auto; max-height: 300px">
                         {% for rep in publi.reponses %}
                                 <div>
                                     <b><a style="text-decoration: none" href="/users/{{ u.id }}">{{ u }}</a></b>
@@ -142,6 +143,7 @@
                 {% endif %}
             </div>
             {% endif %}
+        {% endif %}
         {% endfor %}
 
         {% else %}

@@ -121,6 +121,11 @@ class Publication implements \Serializable
      */
     private $idPubliOriginale;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $publiSupprimee;
+
     public function __construct()
     {
         $this->signals = new ArrayCollection();
@@ -430,6 +435,18 @@ class Publication implements \Serializable
     public function setIdPubliOriginale(?int $idPubliOriginale): self
     {
         $this->idPubliOriginale = $idPubliOriginale;
+
+        return $this;
+    }
+
+    public function getPubliSupprimee(): ?bool
+    {
+        return $this->publiSupprimee;
+    }
+
+    public function setPubliSupprimee(bool $publiSupprimee): self
+    {
+        $this->publiSupprimee = $publiSupprimee;
 
         return $this;
     }
