@@ -34,6 +34,7 @@ class SignalController extends AbstractController
 
         $signal = new Signal();
         $signal->setPublication($idPubli);
+        $signal->setDate(new \DateTime());
         $signal->setNomUser($idUser->getPseudo());
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($signal);
@@ -55,6 +56,7 @@ class SignalController extends AbstractController
 
         $signal = new Signal();
         $signal->setPublication($idPubli);
+        $signal->setDate(new \DateTime());
         $signal->setNomUser($idUser->getPseudo());
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($signal);

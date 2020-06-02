@@ -19,7 +19,7 @@
                 <tr>
                     <td colspan="2">{{signal.publication.user.pseudo}}</td>
                     <td colspan="2">{{ signal.nomUser }}</td>
-                    <td colspan="2">{#{ rep.date|date("d/m/Y") }#}</td>
+                    <td colspan="2">{{ signal.date|date("d/m/Y") }}</td>
                     <td colspan="2" width="30%">
                         <button type="button" class="btn btn-primary">
                             <a style="text-decoration: none; color: white" href="publication/{{ signal.publication.id }}">Voir</a>

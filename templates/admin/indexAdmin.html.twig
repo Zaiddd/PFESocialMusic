@@ -21,7 +21,7 @@
                 {% if publi.publiSupprimee == 0 %}
                 <tr>
                     <td colspan="2">{{ publi.user.pseudo }}</td>
-                    <td colspan="2">{{publi.commentaire}}</td>
+                    <td colspan="2"><p style="text-overflow: ellipsis;white-space: nowrap; overflow: hidden; width:200px;">{{publi.commentaire}}</p></td>
                     <td colspan="2">{{publi.date|date("d/m/Y")}}</td>
                     <td colspan="2"><button type="button" class="btn btn-primary"><a style="text-decoration: none; color: white" href="publication/{{ publi.id }}">Voir</a></button></td>
                 </tr>
@@ -64,8 +64,8 @@
                 {% if p.publiSupprimee == 0 %}
                 <tr>
                     <td colspan="2">{{ u }}</td>
-                    <td colspan="2">{{rep}}</td>
-                    <td colspan="2">{#{ rep.date|date("d/m/Y") }#}</td>
+                    <td colspan="2"><p style="text-overflow: ellipsis;white-space: nowrap; overflow: hidden; width:200px;">{{ rep }}</p></td>
+                    <td colspan="2">{{ p.date|date("d/m/Y") }}</td>
                     <td colspan="2"><button type="button" class="btn btn-primary"><a style="text-decoration: none; color: white" href="publication/{{ p.id }}">Voir</a></button></td>
                 </tr>
                 {% endif %}

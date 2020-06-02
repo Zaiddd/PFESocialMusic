@@ -28,6 +28,11 @@ class Signal
      */
     private $nomUser;
 
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $date;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -53,6 +58,18 @@ class Signal
     public function setNomUser(string $nomUser): self
     {
         $this->nomUser = $nomUser;
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): self
+    {
+        $this->date = $date;
 
         return $this;
     }
