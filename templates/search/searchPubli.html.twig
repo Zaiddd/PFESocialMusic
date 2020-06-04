@@ -18,7 +18,7 @@
             <section id="content">
 
                 {% for publi in publication %}
-                    {% if publi.partage == 0 and app.user.pseudo != publi.user.pseudo %}
+                    {% if publi.partage == 0 and app.user.pseudo != publi.user.pseudo and publi.publiSupprimee == 0 %}
                         <article>
                             <div class="card border-light mb-3" id="articlesRecents" style="max-width: 25rem;margin:1.5em">
                                 <div class="card-header">

@@ -24,7 +24,7 @@
 
     <div class="container" style="margin-top: 7%">
         {% for publi in publication %}
-            {% if publi.publiSuivie == 0 %}
+            {% if publi.publiSuivie == 0 and publi.publiSupprimee == 0%}
 
             {% if publi.partage == 1 and user.id == publi.user.id %}
                 {% if publi.publiSuivie == 0 %}
