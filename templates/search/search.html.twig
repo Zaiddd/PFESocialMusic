@@ -10,7 +10,7 @@
     <div class="form-group">
     {% form_theme searchForm 'bootstrap_4_layout.html.twig' %}
     {{ form_start(searchForm) }}
-    {{ form_row(searchForm.pseudo, {'label': " ", 'attr': {'placeholder': 'Mot clé...'}}) }}
+    {{ form_row(searchForm.pseudo, {'label': " ", 'attr': {'placeholder': 'Mot clé, genre musical...'}}) }}
     <button class="btn btn-primary">rechercher</button>
     {{ form_end(searchForm) }}
 
@@ -24,6 +24,7 @@
                     <div class="card-header">
 
                         <h3>{{ user.pseudo }}</h3>
+                        <small>Genre(s) musical(aux) : {% if user.genreMusique != null %}{{ user.genreMusique }} {% else %}Aucun. {% endif %}</small>
 
                     </div>
                     <div class="card-body">

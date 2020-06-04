@@ -55,4 +55,12 @@ class UserRepository extends ServiceEntityRepository
             ->getQuery()
             ->execute();
     }
+
+    public function searchGout($goutMusical) {
+        return $this->createQueryBuilder('User')
+            ->andWhere('User.genreMusique LIKE :genreMusique')
+            ->setParameter('genreMusique', '%'.$goutMusical.'%')
+            ->getQuery()
+            ->execute();
+    }
 }

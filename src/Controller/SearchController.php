@@ -56,30 +56,47 @@ class SearchController extends AbstractController
         $searchForm->handleRequest($request);
 
         $donnees = $repo->findAll();
+        $donnees2 = $repo->findAll();
 
         if ($searchForm->isSubmitted() && $searchForm->isValid()) {
 
             $pseudo = $searchForm->getData()->getPseudo();
 
             $donnees = $repo->search($pseudo);
+            $donnees2 = $repo->searchGout($pseudo);
 
 
             if ($donnees == null) {
-                $this->addFlash('erreur', 'Aucun utilisateur contenant ce mot clé dans son pseudo n\'a été trouvé, essayez en un autre.');
-
+                if($donnees2 == null)
+                    $this->addFlash('erreur', 'Aucun pseudo d\'utilisateur ou genre musical contenant ce mot clé n\'a été trouvé, essayez en un autre.');
             }
 
         }
 
-        // Paginate the results of the query
-        $users = $paginator->paginate(
-        // Doctrine Query, not results
-            $donnees,
-            // Define the page parameter
-            $request->query->getInt('page', 1),
-            // Items per page
-            4
-        );
+        if($donnees2 == null){
+            // Paginate the results of the query
+            $users = $paginator->paginate(
+            // Doctrine Query, not results
+                $donnees,
+                // Define the page parameter
+                $request->query->getInt('page', 1),
+                // Items per page
+                4
+            );
+        }
+        else{
+            // Paginate the results of the query
+            $users = $paginator->paginate(
+            // Doctrine Query, not results
+                $donnees2,
+                // Define the page parameter
+                $request->query->getInt('page', 1),
+                // Items per page
+                4
+            );
+        }
+
+
 
         return $this->render('search/search.html.twig',[
             'users' => $users,
