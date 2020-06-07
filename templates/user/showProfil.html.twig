@@ -34,7 +34,7 @@
 
             {% if app.user.id == publi.user.id %}
             <div class="p-3 shadow p-3 mb-5 bg-white" style="width: 75%; margin: 0 auto; height: fit-content; border-radius: 10px" >
-                <h5 style="display: inline"><a style="color: black" href="users/{% if publi.partage ==1 %}{{ publi.idUserOriginal }}{% else %}{{ publi.user.id }}{% endif %}">{% if publi.partage ==1 %}{{ publi.userOriginal }}{% else %}{{ publi.user.pseudo }}{% endif %}</a></h5>
+                <h5 style="display: inline"><a style="color: black" href="/users/{% if publi.partage ==1 %}{{ publi.idUserOriginal }}{% else %}{{ publi.user.id }}{% endif %}">{% if publi.partage ==1 %}{{ publi.userOriginal }}{% else %}{{ publi.user.pseudo }}{% endif %}</a></h5>
                 {% if user.id != publi.user.id %}
                     -
                     <a href="/users/{{ publi.user.id }}/{% if publi.publiSuivie == 0 %}suivre{% else %}desabonner{% endif %}">{% if publi.publiSuivie == 0 %}Suivre{% else %}Se désabonner{% endif %}</a>
@@ -130,11 +130,6 @@
             {% endif %}
         {% endfor %}
     </div>
-
-    <div class="wrapper" style="display: flex; width: 100%; margin-top: -48px;">
-        <nav id="sidebar" style="width: 250px; height: 100vh;  background: black;"><br><br></nav>
-    </div>
-
 
     <script>
         window.onscroll = function() {scrollFunction()};
