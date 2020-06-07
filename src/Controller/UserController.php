@@ -439,32 +439,50 @@ class UserController extends AbstractController
         $user = $doctrine->getRepository(User::class)->findOneBy(['id' => [$id]]);
         $userConnecte = $doctrine->getRepository(User::class)->find($this->getUser()->getId());
         $publicationsUser = $doctrine->getRepository(Publication::class)->findBy(['user' => $user]);
+        $allPubli = $doctrine->getRepository(Publication::class)->findAll();
 
         foreach($publicationsUser as $publi){
-            $newPubli = new Publication();
-            $newPubli->setDate(new \DateTime());
-            $newPubli->setUser($this->getUser());
-            $newPubli->setChampPhoto($publi->getChampPhoto());
-            $newPubli->setCommentaire($publi->getCommentaire());
-            $newPubli->setUserQuiCommente($publi->getUserQuiCommente());
-            $newPubli->setReponses($publi->getReponses());
-            $newPubli->setPartage(1);
-            $newPubli->setNbLike($publi->getNbLike());
-            $newPubli->setNbDislike($publi->getNbDislike());
-            $newPubli->setUserOriginal($publi->getUser()->getPseudo());
-            $newPubli->setIdUserOriginal($publi->getUser()->getId());
-            $newPubli->setPubliSuivie(1);
-            $newPubli->setUserAyantSuivi($this->getUser()->getId());
-            $newPubli->setSpotify($publi->getSpotify());
-            $newPubli->setDeezer($publi->getDeezer());
-            $newPubli->setListeUserQuiLike($publi->getListeUserQuiLike());
-            $newPubli->setListeUserQuiDislike($publi->getListeUserQuiDislike());
-            $newPubli->setIdPubliOriginale($publi->getId());
-            $newPubli->setPubliSupprimee(0);
+            if($publi->getPubliSupprimee() == 0) {
+                $newPubli = new Publication();
+                $newPubli->setDate(new \DateTime());
+                $newPubli->setUser($this->getUser());
+                $newPubli->setChampPhoto($publi->getChampPhoto());
+                $newPubli->setCommentaire($publi->getCommentaire());
+                $newPubli->setUserQuiCommente($publi->getUserQuiCommente());
+                $newPubli->setReponses($publi->getReponses());
+                $newPubli->setPartage(1);
+                $newPubli->setNbLike($publi->getNbLike());
+                $newPubli->setNbDislike($publi->getNbDislike());
+                $newPubli->setUserOriginal($publi->getUser()->getPseudo());
+                $newPubli->setIdUserOriginal($publi->getUser()->getId());
+                $newPubli->setPubliSuivie(1);
+                $newPubli->setUserAyantSuivi($this->getUser()->getId());
+                $newPubli->setSpotify($publi->getSpotify());
+                $newPubli->setDeezer($publi->getDeezer());
+                $newPubli->setListeUserQuiLike($publi->getListeUserQuiLike());
+                $newPubli->setListeUserQuiDislike($publi->getListeUserQuiDislike());
+                $newPubli->setIdPubliOriginale($publi->getId());
+                $newPubli->setPubliSupprimee(0);
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($newPubli);
-            $entityManager->flush();
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($newPubli);
+                $entityManager->flush();
+            }
+        }
+
+        foreach($allPubli as $unePubli){
+            if($unePubli->getUserOriginal() == $user->getPseudo()){
+                $unePubli->setPubliSuivie(1);
+
+                $arrayUsersSuivis = $userConnecte->getUserSuivis();
+                if($arrayUsersSuivis == null){
+                    $userConnecte->setUserSuivis(array($unePubli->getUser()->getId()));
+                }
+                else{
+                    array_push($arrayUsersSuivis, $unePubli->getUser()->getId());
+                    $userConnecte->setUserSuivis($arrayUsersSuivis);
+                }
+            }
         }
 
         $arrayUsersSuivis = $userConnecte->getUserSuivis();
