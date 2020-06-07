@@ -29,7 +29,7 @@
     <div class="container" style="margin-top: 7%">
 
 
-        {% for publi in publication %}
+        {% for publi in publication|reverse %}
         {% if publi.publiSupprimee == 0 %}
 
             {% if app.user.id == publi.user.id or publi.userAyantSuivi == app.user.id %}
@@ -45,8 +45,10 @@
             <div class="p-3 shadow p-3 mb-5 bg-white" style="width: 75%; margin: 0 auto; height: fit-content; border-radius: 10px" >
                 <h5 style="display: inline"><a style="color: black" href="users/{% if publi.partage ==1 %}{{ publi.idUserOriginal }}{% else %}{{ publi.user.id }}{% endif %}">{% if publi.partage ==1 %}{{ publi.userOriginal }}{% else %}{{ publi.user.pseudo }}{% endif %}</a></h5>
 
-                -
-                <a href="/users/{{ publi.user.id }}/{% if publi.publiSuivie == 0 %}suivre{% else %}desabonner{% endif %}">{% if publi.publiSuivie == 0 %}Suivre{% else %}Se désabonner{% endif %}</a>
+                {% if app.user.pseudo != publi.userOriginal %}
+                    -
+                    <a href="/users/{{ publi.user.id }}/{% if publi.publiSuivie == 0 %}suivre{% else %}desabonner{% endif %}">{% if publi.publiSuivie == 0 %}Suivre{% else %}Se désabonner{% endif %}</a>
+                {% endif %}
                 <a style="margin-left: 3%; float: right; text-decoration: none" href="/{{ publi.id }}/signaler">
                     <span class="icon-stack">
                       <i class="icon-circle icon-stack-base"></i>
