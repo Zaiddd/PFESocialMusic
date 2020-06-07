@@ -82,8 +82,10 @@
 
                     {% if app.user.pseudo != "admin" %}
                     <a style="margin-left: 3%; text-decoration: none; color: darkcyan" href="/users/{{ publi.id }}/commenter"><i class="icon-comments-alt icon-2x"></i></a>
+                        {% if app.user.pseudo != publi.userOriginal %}
                     <a style="float:right; text-decoration: none" href="/{{ publi.id }}/partager" id="partager"><i class="icon-share icon-2x"></i></a>
                         {% endif %}
+                    {% endif %}
                     <hr>
                     {% if publi.partage == 0 %}
                     <b><label>Commentaires</label></b><br><br>

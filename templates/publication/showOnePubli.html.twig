@@ -52,7 +52,9 @@
 
         {% if app.user.pseudo != "admin" %}
             <a style="margin-left: 3%; text-decoration: none; color: darkcyan" href="/users/{{ publication.id }}/commenter"><i class="icon-comments-alt icon-2x"></i></a>
+            {% if app.user.pseudo != publication.userOriginal %}
             <a style="float:right; text-decoration: none" href="/{{ publication.id }}/partager" id="partager"><i class="icon-share icon-2x"></i></a>
+            {% endif %}
         {% endif %}
     <hr>
     <b><label>Commentaires</label></b><br><br>
