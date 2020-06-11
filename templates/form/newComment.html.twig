@@ -1,11 +1,26 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 
-<div class="container" style=" height: 350px;">
+<div class="container" style=" height: fit-content;">
     <hr>
         <h5>{{ idPubli.userOriginal }}</h5><br>
-        <span style="margin-left: 3%"></span>{{ idPubli.commentaire }}
-        {#{idPubli.champPhoto}#}
-        <br><br><br><br>
+        <span style="margin-left: 3%"></span>{{ idPubli.commentaire }}<br><br>
+            <div style="text-align: center">
+                <img style="max-width: 750px; max-height: 700px" alt="" src="../../../../../uploads/{{ idPubli.getChampPhoto()}}">
+            </div>
+
+    {% if idPubli.spotify != null %}
+        <br>
+        <div style="text-align: center">
+            <iframe src="https://open.spotify.com/embed{{ idPubli.spotify }}" width="250" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+        </div>
+    {% endif %}
+
+    {% if idPubli.deezer != null %}
+        <iframe scrolling="no" frameborder="0" allowTransparency="true" src="{{ idPubli.deezer }}"  width="250" height="200"></iframe>
+    {% endif %}
+    <br>
+    <small><i>Tags : {% if idPubli.tags == null %} Aucun tag {% else %} {{ idPubli.tags }} {% endif %} </i></small>
+    <hr>
 
 
         {{ form_start(form) }}
